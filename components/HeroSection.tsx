@@ -20,7 +20,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
   return (
     <div className="relative w-full rounded-3xl overflow-hidden bg-slate-900 shadow-2xl mb-10 border border-slate-800">
       {/* Abstract Data Background */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden z-0">
         {/* Hide heavy blurs/gradients in PDF to avoid rendering artifacts */}
         {!isPdfMode && (
           <div className="absolute -top-[50%] -left-[20%] w-[80%] h-[200%] bg-gradient-to-br from-[#E56334]/10 via-transparent to-transparent rotate-12 blur-3xl"></div>
@@ -31,7 +31,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
         )}
       </div>
 
-      <div className="relative px-5 py-8 md:px-12 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 px-5 py-8 md:px-12 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Content: Report Header */}
         <div className="lg:col-span-7 space-y-6">
           <div>

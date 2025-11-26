@@ -84,31 +84,54 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
         </div>
         
         <div className="mb-8 md:mb-12 p-5 md:p-8 bg-slate-50/80 rounded-3xl border border-slate-100">
-          <div className="relative w-full h-10 flex items-center">
-            <input
-              type="range"
-              min={10}
-              max={25}
-              step={0.5}
-              value={systemSize}
-              onChange={(e) => setSystemSize(parseFloat(e.target.value))}
-              className="w-full z-20 relative"
-            />
-          </div>
-          <div className="flex justify-between text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider">
-            <span>10 kWp</span>
-            
-            {/* Dynamic System Status Label */}
-            {parseFloat(solarSystem.coverage) < 80 ? (
-               <span className="text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100 shadow-sm">Subdimensionado</span>
-            ) : parseFloat(solarSystem.coverage) > 110 ? (
-               <span className="text-orange-500 bg-orange-50 px-3 py-1 rounded-full border border-orange-100 shadow-sm">Sobredimensionado</span>
-            ) : (
-               <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Rango Óptimo</span>
-            )}
+          {isPdfMode ? (
+            <div className="space-y-3">
+              <div className="relative h-6 flex items-center">
+                <div className="w-full h-3 bg-gradient-to-r from-[#E56334] to-[#DE3078] rounded-full" />
+                <div
+                  className="absolute h-6 w-6 rounded-full border-4 border-white shadow-md"
+                  style={{
+                    left: `${((systemSize - 10) / 15) * 100}%`,
+                    transform: 'translateX(-50%)',
+                    background: '#E56334'
+                  }}
+                />
+              </div>
+              <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <span>10 kWp</span>
+                <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Rango Óptimo</span>
+                <span>25 kWp</span>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="relative w-full h-10 flex items-center">
+                <input
+                  type="range"
+                  min={10}
+                  max={25}
+                  step={0.5}
+                  value={systemSize}
+                  onChange={(e) => setSystemSize(parseFloat(e.target.value))}
+                  className="w-full z-20 relative"
+                />
+              </div>
+              <div className="flex justify-between text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider">
+                <span>10 kWp</span>
+                
+                {/* Dynamic System Status Label */}
+                {parseFloat(solarSystem.coverage) < 80 ? (
+                   <span className="text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100 shadow-sm">Subdimensionado</span>
+                ) : parseFloat(solarSystem.coverage) > 110 ? (
+                   <span className="text-orange-500 bg-orange-50 px-3 py-1 rounded-full border border-orange-100 shadow-sm">Sobredimensionado</span>
+                ) : (
+                   <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Rango Óptimo</span>
+                )}
 
-            <span>25 kWp</span>
-          </div>
+                <span>25 kWp</span>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
@@ -158,7 +181,7 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
             ].map((spec, idx) => (
               <div key={idx} className="flex justify-between items-center py-2 md:py-3 border-b border-slate-100 last:border-0 hover:bg-slate-50 px-2 md:px-4 rounded-xl transition-colors -mx-2 md:-mx-4">
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">{spec.label}</span>
-                <span className="text-[10px] md:text-sm font-bold text-slate-900 text-right max-w-[60%] truncate">{spec.value}</span>
+                <span className={`text-[10px] md:text-sm font-bold text-slate-900 text-right max-w-[60%] ${isPdfMode ? '' : 'truncate'}`}>{spec.value}</span>
               </div>
             ))}
           </div>
