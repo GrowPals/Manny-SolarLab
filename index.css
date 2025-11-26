@@ -9,3 +9,38 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* PDF mode utilities to freeze animations and blurs for crisp exports */
+.pdf-mode {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  color-adjust: exact;
+  background: #ffffff;
+}
+
+.pdf-mode *,
+.pdf-mode *::before,
+.pdf-mode *::after {
+  animation: none !important;
+  transition: none !important;
+  backdrop-filter: none !important;
+}
+
+.pdf-mode [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+}
+
+.pdf-mode .recharts-tooltip-wrapper {
+  display: none !important;
+}
+
+.pdf-mode .recharts-wrapper text {
+  font-family: "Inter", sans-serif !important;
+}
+
+.pdf-mode input,
+.pdf-mode button,
+.pdf-mode select,
+.pdf-mode textarea {
+  pointer-events: none;
+}

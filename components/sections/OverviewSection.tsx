@@ -50,7 +50,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
   };
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className={`space-y-6 md:space-y-8 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       {/* Hero Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         <StatCard 

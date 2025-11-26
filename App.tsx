@@ -93,6 +93,11 @@ const App: React.FC = () => {
     setIsExporting(true);
     
     try {
+      // Ensure fonts are fully loaded to avoid fallback rendering in the capture
+      if (document.fonts?.ready) {
+        await document.fonts.ready;
+      }
+
       // Small delay to ensure any re-renders or font loads are settled
       await new Promise(resolve => setTimeout(resolve, 500));
       
@@ -108,6 +113,16 @@ const App: React.FC = () => {
             // Ensure visibility in clone context
             element.style.display = 'block';
             element.style.opacity = '1';
+            
+            // Force disable all animations and transitions in PDF clone
+            const allElements = element.querySelectorAll('*');
+            allElements.forEach((el: any) => {
+              if (el.style) {
+                el.style.animation = 'none';
+                el.style.transition = 'none';
+                el.style.transform = '';
+              }
+            });
           }
         }
       });
@@ -257,15 +272,21 @@ const App: React.FC = () => {
         This ensures it doesn't expand the document width (causing scrollbars)
         and doesn't render 0x0 size (causing broken content).
       */}
-      <div style={{ position: 'fixed', top: 0, left: '-5000px', width: '1200px', zIndex: -50 }}>
+      <div style={{ position: 'fixed', top: 0, left: '-5000px', width: '1200px', zIndex: -50 }} aria-hidden="true">
         <div 
           id="report-container"
           ref={reportRef} 
-          className="w-[1200px] bg-white p-20 space-y-16 font-sans text-slate-900"
+          className="pdf-mode w-[1200px] bg-white p-20 space-y-16 font-sans text-slate-900"
         >
            {/* Report Header */}
            <div className="flex justify-between items-center mb-10 pb-10 border-b-2 border-slate-100">
-              <MannyLogo textSize="text-6xl" />
+              <div className="flex items-center gap-5">
+                <div className="space-y-2">
+                  <div className="h-3 w-20 rounded-full bg-gradient-to-r from-[#E56334] via-[#D14656] to-[#DE3078] shadow-lg shadow-[#E56334]/30"></div>
+                  <div className="h-3 w-12 rounded-full bg-slate-200"></div>
+                </div>
+                <MannyLogo textSize="text-6xl" />
+              </div>
               <div className="text-right">
                 <h1 className="text-3xl font-black text-slate-900 tracking-tight">Diagnóstico Energético Integral</h1>
                 <p className="text-slate-500 text-lg font-medium mt-2">Noviembre 2025</p>
@@ -325,7 +346,8 @@ const App: React.FC = () => {
                isPlaying={false} 
                setIsPlaying={() => {}} 
                currentAnimYear={25} 
-               setCurrentAnimYear={() => {}} 
+               setCurrentAnimYear={() => {}}
+               isPdfMode={true}
              />
            </section>
 

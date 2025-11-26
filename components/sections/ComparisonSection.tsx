@@ -145,19 +145,19 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
         </p>
         
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto mb-2">
-            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
               <p className="text-xl md:text-4xl font-black text-emerald-400 mb-1 md:mb-2 tracking-tight">{financials.paybackYears}</p>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Años Payback</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
               <p className="text-xl md:text-4xl font-black text-purple-400 mb-1 md:mb-2 tracking-tight">{financials.irr}%</p>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">TIR Anual</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
               <p className="text-xl md:text-4xl font-black text-blue-400 mb-1 md:mb-2 tracking-tight">{system.coverage}%</p>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Independencia</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
               <p className="text-xl md:text-4xl font-black text-orange-400 mb-1 md:mb-2 tracking-tight">25</p>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Años Garantía</p>
             </div>

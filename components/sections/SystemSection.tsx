@@ -176,11 +176,11 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
           </div>
           
           <div className="grid grid-cols-2 gap-3 md:gap-6 relative z-10">
-            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/20">
+            <div className={`${isPdfMode ? 'bg-white/20 border-white/30' : 'bg-white/10 backdrop-blur-md border-white/20'} rounded-xl md:rounded-2xl p-4 md:p-6 border`}>
               <p className="text-2xl md:text-5xl font-black mb-1 md:mb-2 tracking-tighter">{solarSystem.co2Avoided}</p>
               <p className="text-[10px] font-bold text-white/70 uppercase tracking-widest">Ton CO₂</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/20">
+            <div className={`${isPdfMode ? 'bg-white/20 border-white/30' : 'bg-white/10 backdrop-blur-md border-white/20'} rounded-xl md:rounded-2xl p-4 md:p-6 border`}>
               <p className="text-2xl md:text-5xl font-black mb-1 md:mb-2 tracking-tighter">{(solarSystem.treesEquivalent/1000).toFixed(1)}k</p>
               <p className="text-[10px] font-bold text-white/70 uppercase tracking-widest">Árboles</p>
             </div>

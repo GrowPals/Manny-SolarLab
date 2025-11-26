@@ -21,7 +21,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
     <div className="relative w-full rounded-3xl overflow-hidden bg-slate-900 shadow-2xl mb-10 border border-slate-800">
       {/* Abstract Data Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-[50%] -left-[20%] w-[80%] h-[200%] bg-gradient-to-br from-[#E56334]/10 via-transparent to-transparent rotate-12 blur-3xl"></div>
+        {/* Hide heavy blurs/gradients in PDF to avoid rendering artifacts */}
+        {!isPdfMode && (
+          <div className="absolute -top-[50%] -left-[20%] w-[80%] h-[200%] bg-gradient-to-br from-[#E56334]/10 via-transparent to-transparent rotate-12 blur-3xl"></div>
+        )}
         {/* Hide texture in PDF mode to avoid CORS/rendering issues */}
         {!isPdfMode && (
           <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
@@ -34,7 +37,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-800 border border-slate-700 mb-4">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E56334] opacity-75"></span>
+                {!isPdfMode && (
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E56334] opacity-75"></span>
+                )}
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E56334]"></span>
               </span>
               <span className="text-xs font-mono font-medium text-slate-300 uppercase tracking-widest">Diagnóstico Generado: Nov 2025</span>
@@ -70,7 +75,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
         </div>
 
         {/* Right Content: Key Metrics Dashboard */}
-        <div className="lg:col-span-5 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-1">
+        <div className={`lg:col-span-5 rounded-2xl p-1 ${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-800/50 backdrop-blur-sm border border-slate-700'}`}>
           <div className="grid grid-cols-2 divide-x divide-slate-700/50 border-b border-slate-700/50">
              <div className="p-6">
                 <div className="text-slate-400 text-xs font-medium mb-1 flex items-center gap-1">

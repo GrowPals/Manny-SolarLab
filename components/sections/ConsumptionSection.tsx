@@ -12,7 +12,7 @@ interface ConsumptionSectionProps {
 
 const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = false }) => {
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className={`space-y-6 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       {/* Consumption Chart */}
       <Card className="p-5 md:p-8">
         <SectionTitle icon={Activity} title="Historial de Consumo" subtitle="Comportamiento últimos 12 meses (kWh)" color="blue" />
@@ -111,11 +111,11 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
 
       {/* Alert */}
       <Card gradient className="p-5 md:p-8 text-white border-none flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-6 shadow-xl shadow-[#DE3078]/20">
-        <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl shadow-inner shrink-0 hidden sm:block">
+        <div className={`p-3 rounded-2xl shadow-inner shrink-0 hidden sm:block ${isPdfMode ? 'bg-white/30' : 'bg-white/20 backdrop-blur-md'}`}>
           <AlertCircle size={28} />
         </div>
         <div className="flex gap-3 sm:block">
-          <div className="sm:hidden p-2 bg-white/20 backdrop-blur-md rounded-xl h-fit mt-1">
+          <div className={`sm:hidden p-2 rounded-xl h-fit mt-1 ${isPdfMode ? 'bg-white/30' : 'bg-white/20 backdrop-blur-md'}`}>
              <AlertCircle size={18} />
           </div>
           <div>

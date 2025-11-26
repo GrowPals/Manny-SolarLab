@@ -14,6 +14,7 @@ interface FinancialSectionProps {
   setIsPlaying: (playing: boolean) => void;
   currentAnimYear: number;
   setCurrentAnimYear: (year: number) => void;
+  isPdfMode?: boolean;
 }
 
 const FinancialSection: React.FC<FinancialSectionProps> = ({ 
@@ -23,12 +24,13 @@ const FinancialSection: React.FC<FinancialSectionProps> = ({
   isPlaying, 
   setIsPlaying, 
   currentAnimYear, 
-  setCurrentAnimYear 
+  setCurrentAnimYear,
+  isPdfMode = false
 }) => {
   const [showCashflow, setShowCashflow] = useState(false);
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className={`space-y-6 md:space-y-8 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       {/* Investment Summary */}
       <div className="grid lg:grid-cols-3 gap-6">
         <Card className="p-5 md:p-8 lg:col-span-2 bg-white border border-slate-200 shadow-xl shadow-slate-200/50">
@@ -68,7 +70,10 @@ const FinancialSection: React.FC<FinancialSectionProps> = ({
         </Card>
 
         <Card gradient className="p-5 md:p-8 text-white border-none flex flex-col justify-center relative overflow-hidden shadow-2xl shadow-[#DE3078]/20">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+          {/* Hide decorative blur in PDF to avoid rendering artifacts */}
+          {!isPdfMode && (
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+          )}
           
           <div className="relative z-10">
              <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-8">
