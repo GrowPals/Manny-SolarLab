@@ -1,10 +1,21 @@
 import React from 'react';
-import { TOTAL_SAVINGS_25Y, ROI_YEARS, SYSTEM_SIZE_KW, PANEL_COUNT, CO2_TONS, CLIENT_DATA } from '../constants';
-import { TrendingUp, Activity, FileBarChart, AlertTriangle, ArrowRight } from 'lucide-react';
+import { TOTAL_SAVINGS_25Y, ROI_YEARS, SYSTEM_SIZE_KW, CLIENT_DATA } from '../constants';
+import { FileBarChart, AlertTriangle, Activity } from 'lucide-react';
+import { FinancialAnalysis, SolarSystemSpecs } from '../types';
+
+interface HeroSectionProps {
+  financials?: FinancialAnalysis;
+  system?: SolarSystemSpecs;
+}
 
 const formatCurrency = (val: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(val);
 
-const HeroSection: React.FC = () => {
+const HeroSection: React.FC<HeroSectionProps> = ({ financials, system }) => {
+  // Use dynamic values if available, otherwise fallback to constants
+  const totalSavings = financials ? financials.totalSavings : TOTAL_SAVINGS_25Y;
+  const roiYears = financials ? financials.paybackYears : ROI_YEARS;
+  const systemSize = system ? system.capacity.toFixed(1) : SYSTEM_SIZE_KW;
+
   return (
     <div className="relative w-full rounded-3xl overflow-hidden bg-slate-900 shadow-2xl mb-10 border border-slate-800">
       {/* Abstract Data Background */}
@@ -13,7 +24,7 @@ const HeroSection: React.FC = () => {
         <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
       </div>
 
-      <div className="relative px-6 py-10 md:px-12 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="relative px-5 py-8 md:px-12 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Content: Report Header */}
         <div className="lg:col-span-7 space-y-6">
           <div>
@@ -25,12 +36,14 @@ const HeroSection: React.FC = () => {
               <span className="text-xs font-mono font-medium text-slate-300 uppercase tracking-widest">Diagnóstico Generado: Nov 2025</span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight">
-              Diagnóstico Energético <br />
-              & Viabilidad Financiera
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-4 md:mb-6">
+              Diagnóstico Energético <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E56334] to-[#DE3078]">
+                 & Viabilidad Financiera
+              </span>
             </h1>
-            <p className="text-slate-400 text-base md:text-lg mt-4 max-w-xl leading-relaxed">
-              Reporte técnico para <strong>{CLIENT_DATA.shortName}</strong>. Análisis de perfil de consumo, ineficiencias tarifarias y proyección de rentabilidad patrimonial.
+            <p className="text-slate-400 text-sm md:text-lg max-w-xl leading-relaxed font-medium">
+              Reporte técnico para <strong className="text-white">{CLIENT_DATA.shortName}</strong>. Análisis de perfil de consumo, ineficiencias tarifarias y proyección de rentabilidad patrimonial.
             </p>
           </div>
 
@@ -59,19 +72,19 @@ const HeroSection: React.FC = () => {
                 <div className="text-slate-400 text-xs font-medium mb-1 flex items-center gap-1">
                   <FileBarChart size={14} /> Gasto Proyectado (25y)
                 </div>
-                <div className="text-2xl font-bold text-white tracking-tight">{formatCurrency(TOTAL_SAVINGS_25Y)}</div>
+                <div className="text-2xl font-bold text-white tracking-tight">{formatCurrency(totalSavings)}</div>
                 <div className="text-xs text-[#E56334] mt-1 font-medium">Costo de Inacción</div>
              </div>
              <div className="p-6">
                 <div className="text-slate-400 text-xs font-medium mb-1">Retorno de Inversión</div>
-                <div className="text-2xl font-bold text-white tracking-tight">{ROI_YEARS} Años</div>
+                <div className="text-2xl font-bold text-white tracking-tight">{roiYears} Años</div>
                 <div className="text-xs text-emerald-500 mt-1 font-medium">Recuperación Acelerada</div>
              </div>
           </div>
           <div className="p-6">
              <div className="flex justify-between items-end mb-2">
                 <div className="text-slate-400 text-xs font-medium">Capacidad Instalada Sugerida</div>
-                <div className="text-white text-xl font-bold">{SYSTEM_SIZE_KW} kWp</div>
+                <div className="text-white text-xl font-bold">{systemSize} kWp</div>
              </div>
              <div className="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-gradient-to-r from-[#E56334] to-[#DE3078] h-full w-[85%] rounded-full"></div>

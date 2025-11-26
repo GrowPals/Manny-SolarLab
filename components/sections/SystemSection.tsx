@@ -9,11 +9,12 @@ interface SystemSectionProps {
   systemSize: number;
   setSystemSize: (size: number) => void;
   solarSystem: SolarSystemSpecs;
+  isPdfMode?: boolean;
 }
 
-const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize, solarSystem }) => {
+const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize, solarSystem, isPdfMode = false }) => {
   return (
-    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className={`space-y-6 md:space-y-8 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       
       {/* Custom Styles for Slider to ensure consistency */}
       <style>{`
@@ -94,9 +95,18 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
               className="w-full z-20 relative"
             />
           </div>
-          <div className="flex justify-between text-[9px] md:text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider">
+          <div className="flex justify-between text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider">
             <span>10 kWp</span>
-            <span className="text-[#E56334] bg-white px-3 py-1 rounded-full border border-orange-100 shadow-sm">17.6 kWp (Ideal)</span>
+            
+            {/* Dynamic System Status Label */}
+            {parseFloat(solarSystem.coverage) < 80 ? (
+               <span className="text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100 shadow-sm">Subdimensionado</span>
+            ) : parseFloat(solarSystem.coverage) > 110 ? (
+               <span className="text-orange-500 bg-orange-50 px-3 py-1 rounded-full border border-orange-100 shadow-sm">Sobredimensionado</span>
+            ) : (
+               <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Rango Óptimo</span>
+            )}
+
             <span>25 kWp</span>
           </div>
         </div>
@@ -105,22 +115,27 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
           <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 text-center border border-slate-100 shadow-sm hover:border-blue-100 transition-all hover:shadow-lg hover:-translate-y-1">
             <Grid className="mx-auto text-blue-500 mb-2 md:mb-4 drop-shadow-sm" size={24} strokeWidth={2} />
             <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{solarSystem.panels}</p>
-            <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">Paneles</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">Paneles</p>
           </div>
           <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 text-center border border-slate-100 shadow-sm hover:border-yellow-100 transition-all hover:shadow-lg hover:-translate-y-1">
             <Zap className="mx-auto text-yellow-500 mb-2 md:mb-4 drop-shadow-sm" size={24} strokeWidth={2} />
             <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{(solarSystem.annualGeneration/1000).toFixed(1)}</p>
-            <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">MWh/Año</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">MWh/Año</p>
           </div>
           <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 text-center border border-slate-100 shadow-sm hover:border-emerald-100 transition-all hover:shadow-lg hover:-translate-y-1">
             <Target className="mx-auto text-emerald-500 mb-2 md:mb-4 drop-shadow-sm" size={24} strokeWidth={2} />
             <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{solarSystem.coverage}%</p>
-            <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">Cobertura</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">Cobertura</p>
           </div>
-          <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 text-center border border-slate-100 shadow-sm hover:border-purple-100 transition-all hover:shadow-lg hover:-translate-y-1">
+          <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 text-center border border-slate-100 shadow-sm hover:border-purple-100 transition-all hover:shadow-lg hover:-translate-y-1 group relative">
             <Gauge className="mx-auto text-purple-500 mb-2 md:mb-4 drop-shadow-sm" size={24} strokeWidth={2} />
             <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{solarSystem.area}</p>
-            <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">m² Req.</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">m² Req.</p>
+            
+            {/* Tooltip de espacio */}
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-32 bg-slate-800 text-white text-[9px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-xl">
+              Equivale a ~{Math.ceil(solarSystem.area / 15)} cajones de auto
+            </div>
           </div>
         </div>
       </Card>
@@ -142,7 +157,7 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
               { label: 'Monitoreo', value: 'WiFi + App 24/7' },
             ].map((spec, idx) => (
               <div key={idx} className="flex justify-between items-center py-2 md:py-3 border-b border-slate-100 last:border-0 hover:bg-slate-50 px-2 md:px-4 rounded-xl transition-colors -mx-2 md:-mx-4">
-                <span className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-wide">{spec.label}</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">{spec.label}</span>
                 <span className="text-[10px] md:text-sm font-bold text-slate-900 text-right max-w-[60%] truncate">{spec.value}</span>
               </div>
             ))}
@@ -163,11 +178,11 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
           <div className="grid grid-cols-2 gap-3 md:gap-6 relative z-10">
             <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/20">
               <p className="text-2xl md:text-5xl font-black mb-1 md:mb-2 tracking-tighter">{solarSystem.co2Avoided}</p>
-              <p className="text-[8px] md:text-[10px] font-bold text-white/70 uppercase tracking-widest">Ton CO₂</p>
+              <p className="text-[10px] font-bold text-white/70 uppercase tracking-widest">Ton CO₂</p>
             </div>
             <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/20">
               <p className="text-2xl md:text-5xl font-black mb-1 md:mb-2 tracking-tighter">{(solarSystem.treesEquivalent/1000).toFixed(1)}k</p>
-              <p className="text-[8px] md:text-[10px] font-bold text-white/70 uppercase tracking-widest">Árboles</p>
+              <p className="text-[10px] font-bold text-white/70 uppercase tracking-widest">Árboles</p>
             </div>
           </div>
         </Card>

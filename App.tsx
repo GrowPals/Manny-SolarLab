@@ -41,7 +41,7 @@ const App: React.FC = () => {
     const targets = {
       savings: financialAnalysis.annualSavings,
       payback: parseFloat(financialAnalysis.paybackYears),
-      roi: parseFloat(financialAnalysis.roi25),
+      roi: parseFloat(financialAnalysis.irr),
       coverage: parseFloat(solarSystem.coverage)
     };
     
@@ -135,14 +135,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-[#E56334] selection:text-white pb-24 md:pb-0 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-[#E56334] selection:text-white pb-20 md:pb-0 overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/60 shadow-sm transition-all duration-300">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <div className="flex-shrink-0 cursor-pointer flex items-center gap-4 hover:opacity-80 transition-opacity" onClick={() => setActiveSection('overview')}>
-              <MannyLogo textSize="text-3xl" />
+              <MannyLogo textSize="text-2xl md:text-3xl" />
             </div>
             
             {/* Desktop Nav */}
@@ -167,10 +167,11 @@ const App: React.FC = () => {
               <button 
                 onClick={handleExportPDF}
                 disabled={isExporting}
-                className="flex items-center gap-3 px-6 py-3 bg-slate-900 text-white rounded-xl text-sm font-bold shadow-xl shadow-slate-900/10 hover:shadow-slate-900/20 hover:scale-105 transition-all disabled:opacity-70 disabled:cursor-not-allowed group"
+                className="flex items-center gap-2 md:gap-3 px-3 py-2 md:px-6 md:py-3 bg-slate-900 text-white rounded-lg md:rounded-xl text-xs md:text-sm font-bold shadow-xl shadow-slate-900/10 hover:shadow-slate-900/20 hover:scale-105 transition-all disabled:opacity-70 disabled:cursor-not-allowed group"
               >
-                {isExporting ? <Loader2 size={18} className="animate-spin" /> : <Download size={18} className="group-hover:text-[#E56334] transition-colors" />}
-                <span className="hidden sm:inline">Descargar Diagnóstico PDF</span>
+                {isExporting ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} className="group-hover:text-[#E56334] transition-colors" />}
+                <span className="hidden sm:inline">Descargar PDF</span>
+                <span className="sm:hidden">PDF</span>
               </button>
             </div>
           </div>
@@ -178,10 +179,10 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
         {activeSection === 'overview' && (
           <div className="animate-in fade-in duration-500">
-            <HeroSection />
+            <HeroSection financials={financialAnalysis} system={solarSystem} />
             <OverviewSection 
               financials={financialAnalysis} 
               system={solarSystem} 
@@ -227,19 +228,24 @@ const App: React.FC = () => {
       </main>
 
       {/* Bottom Nav Mobile */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200 px-6 py-3 z-50 safe-area-bottom shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-        <div className="flex justify-between items-center">
+      <div className="md:hidden fixed bottom-4 left-4 right-4 bg-white/90 backdrop-blur-xl border border-white/20 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-50 safe-area-bottom overflow-hidden">
+        <div className="flex justify-between items-center px-2 py-2">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveSection(item.id)}
-              className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all active:scale-95
+              className={`relative flex flex-col items-center justify-center gap-1 w-full py-2 rounded-xl transition-all duration-300
                 ${activeSection === item.id 
                   ? 'text-[#E56334]' 
-                  : 'text-slate-400'}`}
+                  : 'text-slate-400 hover:text-slate-600'}`}
             >
-              <item.icon size={22} strokeWidth={activeSection === item.id ? 2.5 : 2} />
-              <span className={`text-[9px] font-bold ${activeSection === item.id ? 'opacity-100' : 'opacity-70'}`}>{item.label}</span>
+              {activeSection === item.id && (
+                <span className="absolute -top-2 w-8 h-1 bg-[#E56334] rounded-b-full shadow-[0_2px_10px_rgba(229,99,52,0.5)]"></span>
+              )}
+              <item.icon size={20} strokeWidth={activeSection === item.id ? 2.5 : 2} className="transition-transform duration-300 active:scale-90" />
+              <span className={`text-[9px] font-bold tracking-wide transition-all duration-300 ${activeSection === item.id ? 'opacity-100 translate-y-0' : 'opacity-70'}`}>
+                {item.label}
+              </span>
             </button>
           ))}
         </div>
@@ -266,7 +272,7 @@ const App: React.FC = () => {
               </div>
            </div>
            
-           <HeroSection />
+           <HeroSection financials={financialAnalysis} system={solarSystem} />
            
            <section className="break-inside-avoid">
              <div className="flex items-center gap-4 mb-8 pb-4 border-b border-slate-100">
@@ -280,7 +286,7 @@ const App: React.FC = () => {
                animatedValues={{
                  savings: financialAnalysis.annualSavings,
                  payback: financialAnalysis.paybackYears,
-                 roi: financialAnalysis.roi25,
+                 roi: financialAnalysis.irr,
                  coverage: solarSystem.coverage
                }}
                isPdfMode={true}
@@ -303,7 +309,7 @@ const App: React.FC = () => {
                <Sun size={32} className="text-slate-900" strokeWidth={2.5} />
                <h2 className="text-3xl font-black text-slate-900">Solución Técnica</h2>
              </div>
-             <SystemSection systemSize={systemSize} setSystemSize={setSystemSize} solarSystem={solarSystem} />
+             <SystemSection systemSize={systemSize} setSystemSize={setSystemSize} solarSystem={solarSystem} isPdfMode={true} />
            </section>
 
            <section className="break-inside-avoid">
@@ -328,7 +334,7 @@ const App: React.FC = () => {
                <Scale size={32} className="text-slate-900" strokeWidth={2.5} />
                <h2 className="text-3xl font-black text-slate-900">Comparativa & Conclusiones</h2>
              </div>
-             <ComparisonSection financials={financialAnalysis} system={solarSystem} />
+             <ComparisonSection financials={financialAnalysis} system={solarSystem} isPdfMode={true} />
            </section>
 
            <div className="mt-20 pt-10 border-t-2 border-slate-200 text-center text-slate-500 text-base font-medium">
@@ -340,40 +346,39 @@ const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 pb-24 md:pb-0">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-3 gap-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center md:text-left">
             <div>
-              <div className="mb-6 opacity-80 hover:opacity-100 transition-opacity">
-                 <MannyLogo textSize="text-3xl" />
+              <div className="mb-4 md:mb-6 opacity-80 hover:opacity-100 transition-opacity flex justify-center md:justify-start">
+                 <MannyLogo textSize="text-2xl md:text-3xl" />
               </div>
-              <p className="text-slate-400 text-sm leading-relaxed max-w-xs font-medium">
-                Ingeniería especializada en sistemas fotovoltaicos y eficiencia energética para el sector comercial e industrial de alto consumo.
+              <p className="text-slate-400 text-xs md:text-sm leading-relaxed max-w-xs mx-auto md:mx-0 font-medium">
+                Ingeniería especializada en sistemas fotovoltaicos y eficiencia energética.
               </p>
             </div>
-            <div>
-              <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Datos del Cliente</h4>
-              <div className="space-y-2">
-                <p className="text-slate-400 text-sm font-medium">{CLIENT_DATA.name}</p>
-                <div className="flex items-center gap-2 text-slate-500 text-xs">
-                   <div className="w-1.5 h-1.5 rounded-full bg-[#E56334]"></div>
-                   {CLIENT_DATA.address}
-                </div>
-                <div className="flex items-center gap-2 text-slate-500 text-xs">
+            
+            <div className="border-t border-slate-800 pt-6 md:border-0 md:pt-0">
+              <h4 className="font-bold text-xs md:text-sm mb-3 md:mb-4 text-white uppercase tracking-wider">Cliente</h4>
+              <div className="space-y-1.5 md:space-y-2">
+                <p className="text-slate-400 text-xs md:text-sm font-medium">{CLIENT_DATA.name}</p>
+                <div className="flex items-center justify-center md:justify-start gap-2 text-slate-500 text-[10px] md:text-xs">
                    <div className="w-1.5 h-1.5 rounded-full bg-[#E56334]"></div>
                    {CLIENT_DATA.city}, {CLIENT_DATA.postalCode}
                 </div>
               </div>
             </div>
-            <div>
-              <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Detalles del Reporte</h4>
-              <p className="text-slate-400 text-sm font-medium mb-2">Diagnóstico generado: Noviembre 2025</p>
+
+            <div className="border-t border-slate-800 pt-6 md:border-0 md:pt-0 hidden md:block">
+              <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Detalles</h4>
+              <p className="text-slate-400 text-sm font-medium mb-2">Noviembre 2025</p>
               <p className="text-slate-500 text-xs leading-relaxed border-l-2 border-[#E56334] pl-3">
-                Los cálculos presentados son proyecciones basadas en las tarifas vigentes de CFE y el histórico de consumo.
+                Proyecciones basadas en tarifas vigentes CFE.
               </p>
             </div>
           </div>
-          <div className="border-t border-slate-800 mt-12 pt-8 text-center">
-            <p className="text-slate-600 text-[10px] font-bold uppercase tracking-[0.2em]">© 2025 Manny Solar. All Rights Reserved.</p>
+          
+          <div className="border-t border-slate-800 mt-8 md:mt-12 pt-6 md:pt-8 text-center">
+            <p className="text-slate-600 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">© 2025 Manny Solar</p>
           </div>
         </div>
       </footer>

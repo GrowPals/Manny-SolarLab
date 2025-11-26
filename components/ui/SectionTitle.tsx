@@ -18,11 +18,13 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ icon: Icon, title, subtitle
   };
 
   return (
-    <div className="flex items-center gap-4 mb-8">
-      <Icon size={32} className={`${colors[color]} drop-shadow-sm`} strokeWidth={2} />
+    <div className="flex items-start md:items-center gap-3 md:gap-4 mb-5 md:mb-8">
+      <div className="p-2 md:p-0 bg-slate-50 md:bg-transparent rounded-xl md:rounded-none shrink-0">
+        <Icon size={24} className={`md:w-8 md:h-8 ${colors[color]} drop-shadow-sm`} strokeWidth={2.5} />
+      </div>
       <div>
-        <h3 className="font-bold text-slate-900 text-xl leading-tight">{title}</h3>
-        {subtitle && <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mt-1">{subtitle}</p>}
+        <h3 className="font-bold text-slate-900 text-lg md:text-2xl leading-tight md:leading-tight">{title}</h3>
+        {subtitle && <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">{subtitle}</p>}
       </div>
     </div>
   );

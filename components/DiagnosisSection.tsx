@@ -63,7 +63,6 @@ const DiagnosisSection: React.FC<DiagnosisSectionProps> = ({ isPdfMode = false }
                 tickLine={false}
               />
               <Tooltip cursor={{ fill: '#f8fafc' }} content={<CustomTooltip />} />
-              <ReferenceLine y={2500} stroke="#94a3b8" strokeDasharray="3 3" label={{ position: 'right', value: 'Límite DAC', fill: '#94a3b8', fontSize: 10 }} />
               <Bar 
                 dataKey="kwh" 
                 radius={[6, 6, 0, 0]} 
@@ -122,12 +121,12 @@ const DiagnosisSection: React.FC<DiagnosisSectionProps> = ({ isPdfMode = false }
            
            <div className="flex flex-col gap-1 mb-6">
               <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">Gasto Anual Estimado</span>
-              <span className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">$145,000</span>
+              <span className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">$133,000</span>
            </div>
 
            <div className="flex items-start gap-3 text-xs font-medium text-slate-600 bg-slate-50 p-4 rounded-2xl">
               <FileWarning size={16} className="mt-0.5 text-orange-500 shrink-0" />
-              <p>Tu consumo ha crecido un <strong>200%</strong> en el último año. Sin acción, este gasto se duplicará en 4 años.</p>
+              <p>Tu consumo ha crecido un <strong>370%</strong> en el último año (903 vs 4,251 kWh). Sin acción, este gasto se duplicará en 4 años.</p>
            </div>
         </div>
       </div>

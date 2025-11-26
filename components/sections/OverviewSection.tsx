@@ -32,7 +32,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
         <div className="flex items-start justify-between mb-2">
           <Icon size={24} className={`${colors[color]} drop-shadow-sm`} strokeWidth={2} />
           {trend && (
-            <div className={`flex items-center gap-1 text-[8px] md:text-[10px] font-bold px-2 py-1 rounded-full border
+            <div className={`flex items-center gap-1 text-[10px] md:text-[10px] font-bold px-2 py-1 rounded-full border
               ${trend > 0 ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-red-50 text-red-600 border-red-100'}`}>
               <TrendingUp size={10} />
               {Math.abs(trend)}%
@@ -40,10 +40,10 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
           )}
         </div>
         <div className="mt-2 md:mt-4">
-          <p className="text-lg md:text-3xl font-black text-slate-900 tracking-tight leading-none">
-            {value}<span className="text-[9px] md:text-sm text-slate-400 ml-1 font-bold">{suffix}</span>
+          <p className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight leading-none">
+            {value}<span className="text-[10px] md:text-sm text-slate-400 ml-1 font-bold">{suffix}</span>
           </p>
-          <p className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">{label}</p>
+          <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">{label}</p>
         </div>
       </Card>
     );
@@ -69,8 +69,8 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
         />
         <StatCard 
           icon={TrendingUp} 
-          label="ROI 25 Años" 
-          value={`${animatedValues.roi || 0}%`}
+          label="TIR (Retorno Anual)" 
+          value={`${financials.irr || 0}%`}
           color="purple"
         />
         <StatCard 
@@ -87,11 +87,11 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
           <div>
             <div className="flex justify-between items-start mb-5 md:mb-8">
               <div>
-                <span className="inline-flex items-center gap-1.5 px-2 md:px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-[8px] md:text-[10px] font-bold uppercase tracking-widest border border-red-500/20 mb-2 md:mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2 md:px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-[9px] md:text-[10px] font-bold uppercase tracking-widest border border-red-500/20 mb-2 md:mb-3">
                   <AlertCircle size={10} strokeWidth={3} />
                   Consumo Crítico
                 </span>
-                <h2 className="text-lg md:text-2xl font-black text-white leading-tight">{CLIENT_DATA.name}</h2>
+                <h2 className="text-xl md:text-2xl font-black text-white leading-tight">{CLIENT_DATA.name}</h2>
                 <p className="text-slate-400 text-xs flex items-center gap-1.5 mt-2 font-medium">
                   <MapPin size={12} className="text-[#E56334]" />
                   {CLIENT_DATA.address}
@@ -106,11 +106,11 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
             <div className="grid grid-cols-2 gap-4 md:gap-8 pt-5 md:pt-8 border-t border-slate-800">
               <div>
                 <p className="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Factura Actual</p>
-                <p className="text-lg md:text-3xl font-black text-white tracking-tight">${BILL_BREAKDOWN_DATA.total.toLocaleString()}</p>
+                <p className="text-xl md:text-3xl font-black text-white tracking-tight">${BILL_BREAKDOWN_DATA.total.toLocaleString()}</p>
               </div>
               <div>
                 <p className="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Costo Promedio</p>
-                <p className="text-lg md:text-3xl font-black text-[#E56334] tracking-tight">$5.22<span className="text-[10px] md:text-sm text-slate-500 ml-1 font-bold">/kWh</span></p>
+                <p className="text-xl md:text-3xl font-black text-[#E56334] tracking-tight">$5.22<span className="text-[10px] md:text-sm text-slate-500 ml-1 font-bold">/kWh</span></p>
               </div>
             </div>
           </div>
@@ -151,7 +151,12 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
 
       {/* Bill Breakdown */}
       <Card className="p-5 md:p-8">
-        <SectionTitle icon={Receipt} title="Análisis del Recibo CFE" subtitle="¿Qué estás pagando realmente?" color="blue" />
+        <SectionTitle 
+          icon={Receipt} 
+          title="Análisis del Recibo CFE" 
+          subtitle={`Desglose real del servicio ${CLIENT_DATA.serviceNumber}`} 
+          color="blue" 
+        />
         <div className="grid lg:grid-cols-2 gap-8 items-center mt-4">
           <div className="h-64 w-full min-w-0">
             <ResponsiveContainer width="99%" height="100%">

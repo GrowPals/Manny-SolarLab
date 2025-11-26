@@ -71,12 +71,12 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
             <Snowflake className="text-blue-500 sm:mb-4 drop-shadow-sm" size={20} strokeWidth={2} />
             <div>
               <h4 className="font-bold text-slate-900 text-xs md:text-sm mb-0.5">Temporada Fría</h4>
-              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Nov - Feb</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Nov - Feb</p>
             </div>
           </div>
           <div className="text-right sm:text-left">
-             <p className="text-lg md:text-3xl font-black text-blue-600 tracking-tight">~1.5k</p>
-             <p className="text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes</p>
+             <p className="text-lg md:text-3xl font-black text-blue-600 tracking-tight">~1.4k</p>
+             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes (Promedio)</p>
           </div>
         </Card>
         
@@ -85,12 +85,12 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
             <ThermometerSun className="text-[#E56334] sm:mb-4 drop-shadow-sm" size={20} strokeWidth={2} />
             <div>
               <h4 className="font-bold text-slate-900 text-xs md:text-sm mb-0.5">Temporada Cálida</h4>
-              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Mar - Ago</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Mar - Ago</p>
             </div>
           </div>
           <div className="text-right sm:text-left">
-             <p className="text-lg md:text-3xl font-black text-[#E56334] tracking-tight">~3.2k</p>
-             <p className="text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes</p>
+             <p className="text-lg md:text-3xl font-black text-[#E56334] tracking-tight">~2.4k</p>
+             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes (Alto Consumo)</p>
           </div>
         </Card>
         
@@ -99,12 +99,12 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
             <Leaf className="text-emerald-500 sm:mb-4 drop-shadow-sm" size={20} strokeWidth={2} />
             <div>
               <h4 className="font-bold text-slate-900 text-xs md:text-sm mb-0.5">Transición</h4>
-              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Sep - Oct</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Sep - Oct</p>
             </div>
           </div>
           <div className="text-right sm:text-left">
-             <p className="text-lg md:text-3xl font-black text-emerald-600 tracking-tight">~2.1k</p>
-             <p className="text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes</p>
+             <p className="text-lg md:text-3xl font-black text-emerald-600 tracking-tight">~1.5k</p>
+             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes</p>
           </div>
         </Card>
       </div>
@@ -119,10 +119,10 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
              <AlertCircle size={18} />
           </div>
           <div>
-            <h4 className="font-bold text-base md:text-xl mb-1 md:mb-2">Diagnóstico Crítico</h4>
+            <h4 className="font-bold text-base md:text-xl mb-1 md:mb-2">Diagnóstico de Tarifa PDBT</h4>
             <p className="text-white/90 text-[10px] md:text-sm leading-relaxed max-w-3xl font-medium">
-              Se detectó un incremento masivo en el consumo reciente (Nov 2025). 
-              Sin intervención, su gasto anual proyectado supera los <strong>$180,000 MXN</strong>.
+              Su tarifa actual (Pequeña Demanda Baja Tensión) cobra la energía a precio excedente ($5.22/kWh con IVA).
+              Sin paneles, su gasto anual base es de <strong>$133,000 MXN</strong> y aumentando.
             </p>
           </div>
         </div>

@@ -58,6 +58,7 @@ export interface FinancialProjectionYear {
   savings: number;
   cfeWithoutSolar: number;
   cumulative: number;
+  cfeCumulative: number;
   roi: string;
 }
 
@@ -73,5 +74,6 @@ export interface FinancialAnalysis {
   totalSavings: number;
   totalCfeCost: number;
   roi25: string;
+  irr: string; // Internal Rate of Return
   npv: number;
 }

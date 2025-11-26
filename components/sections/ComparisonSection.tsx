@@ -1,17 +1,18 @@
 
 import React from 'react';
-import { XCircle, CheckCircle2, AlertTriangle, ShieldCheck, Sparkles } from 'lucide-react';
+import { XCircle, CheckCircle2, AlertTriangle, ShieldCheck, Sparkles, Info } from 'lucide-react';
 import Card from '../ui/Card';
 import { FinancialAnalysis, SolarSystemSpecs } from '../../types';
 
 interface ComparisonSectionProps {
   financials: FinancialAnalysis;
   system: SolarSystemSpecs;
+  isPdfMode?: boolean;
 }
 
-const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, system }) => {
+const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, system, isPdfMode = false }) => {
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className={`space-y-6 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       
       <div className="grid lg:grid-cols-2 gap-4 md:gap-8">
         {/* Scenario A: Inaction */}
@@ -27,21 +28,60 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
           </div>
           
           <div className="space-y-2 md:space-y-4">
-            <div className="flex justify-between items-center py-2 md:py-3 border-b border-red-100/50">
-              <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">Gasto Año 1</span>
-              <span className="font-bold text-red-600 text-sm md:text-lg">$133,000</span>
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-red-100/50 group relative">
+              <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide flex items-center gap-1">
+                Gasto Anual (Año 1)
+                <Info size={12} className="text-slate-300" />
+              </span>
+              <span className="font-bold text-red-600 text-sm md:text-lg">
+                ${financials.projection[1]?.cfeWithoutSolar.toLocaleString() || "133,000"}
+              </span>
+              {/* Tooltip simple */}
+              <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-slate-800 text-white text-[10px] p-2 rounded shadow-lg w-48 z-10">
+                Lo que pagarías ese año específico a CFE sin paneles.
+              </div>
             </div>
+
             <div className="flex justify-between items-center py-2 md:py-3 border-b border-red-100/50">
-              <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">Gasto Año 10</span>
-              <span className="font-bold text-red-600 text-sm md:text-lg">$217,000</span>
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">
+                  Gasto Anual (Año 10)
+                </span>
+                <span className="text-[10px] text-red-400 font-medium">
+                  Proyectado con inflación
+                </span>
+              </div>
+              <span className="font-bold text-red-600 text-sm md:text-lg">
+                ${financials.projection[10]?.cfeWithoutSolar.toLocaleString() || "217,000"}
+              </span>
             </div>
+
             <div className="flex justify-between items-center py-2 md:py-3 border-b border-red-100/50">
-              <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">Gasto Año 25</span>
-              <span className="font-bold text-red-600 text-sm md:text-lg">$450,000</span>
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">
+                  Gasto Anual (Año 25)
+                </span>
+                <span className="text-[10px] text-red-400 font-medium">
+                  Sin detener el aumento
+                </span>
+              </div>
+              <span className="font-bold text-red-600 text-sm md:text-lg">
+                ${financials.projection[25]?.cfeWithoutSolar.toLocaleString() || "450,000"}
+              </span>
             </div>
+
             <div className="flex justify-between items-center py-3 md:py-5 bg-red-100 rounded-xl md:rounded-2xl px-4 md:px-6 mt-3 md:mt-4">
-              <span className="font-black text-slate-800 uppercase tracking-wider text-[9px] md:text-xs">Costo Total 25y</span>
-              <span className="text-lg md:text-3xl font-black text-red-600 tracking-tight">${(financials.totalCfeCost/1000000).toFixed(1)}M</span>
+              <div className="flex flex-col">
+                <span className="font-black text-slate-800 uppercase tracking-wider text-[10px] md:text-xs">
+                  Gasto Total Acumulado
+                </span>
+                <span className="text-[10px] text-red-500 font-bold">
+                  Suma de 25 años a fondo perdido
+                </span>
+              </div>
+              <span className="text-lg md:text-3xl font-black text-red-600 tracking-tight">
+                ${(financials.totalCfeCost / 1000000).toFixed(1)}M
+              </span>
             </div>
           </div>
           
@@ -80,7 +120,7 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
             </div>
             <div className="flex justify-between items-center py-3 md:py-5 bg-emerald-100 rounded-xl md:rounded-2xl px-4 md:px-6 mt-3 md:mt-4">
               <span className="font-black text-slate-800 uppercase tracking-wider text-[9px] md:text-xs">Patrimonio Neto</span>
-              <span className="text-lg md:text-3xl font-black text-emerald-600 tracking-tight">+${((financials.totalSavings - financials.totalCost)/1000000).toFixed(1)}M</span>
+              <span className="text-lg md:text-3xl font-black text-emerald-600 tracking-tight">+${(financials.projection[25].cumulative / 1000000).toFixed(1)}M</span>
             </div>
           </div>
           
@@ -104,24 +144,24 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
           la decisión financiera óptima con un riesgo técnico despreciable.
         </p>
         
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto mb-2">
-          <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
-            <p className="text-xl md:text-4xl font-black text-emerald-400 mb-1 md:mb-2 tracking-tight">{financials.paybackYears}</p>
-            <p className="text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">Años Payback</p>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto mb-2">
+            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+              <p className="text-xl md:text-4xl font-black text-emerald-400 mb-1 md:mb-2 tracking-tight">{financials.paybackYears}</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Años Payback</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+              <p className="text-xl md:text-4xl font-black text-purple-400 mb-1 md:mb-2 tracking-tight">{financials.irr}%</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">TIR Anual</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+              <p className="text-xl md:text-4xl font-black text-blue-400 mb-1 md:mb-2 tracking-tight">{system.coverage}%</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Independencia</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
+              <p className="text-xl md:text-4xl font-black text-orange-400 mb-1 md:mb-2 tracking-tight">25</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Años Garantía</p>
+            </div>
           </div>
-          <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
-            <p className="text-xl md:text-4xl font-black text-purple-400 mb-1 md:mb-2 tracking-tight">{financials.roi25}%</p>
-            <p className="text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">ROI Total</p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
-            <p className="text-xl md:text-4xl font-black text-blue-400 mb-1 md:mb-2 tracking-tight">{system.coverage}%</p>
-            <p className="text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">Independencia</p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-3xl p-3 md:p-8 border border-white/10 hover:bg-white/15 transition-colors">
-            <p className="text-xl md:text-4xl font-black text-orange-400 mb-1 md:mb-2 tracking-tight">25</p>
-            <p className="text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">Años Garantía</p>
-          </div>
-        </div>
       </Card>
     </div>
   );

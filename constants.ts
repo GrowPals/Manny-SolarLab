@@ -71,7 +71,7 @@ export const PROJECTION_DATA = Array.from({ length: 26 }, (_, i) => {
   const degradation = Math.pow(0.99, i);
   
   // Approximate calculations for static display
-  const cfeCumulative = 145000 * ((Math.pow(1 + inflationRate, i + 1) - 1) / inflationRate);
+  const cfeCumulative = 133000 * ((Math.pow(1 + inflationRate, i + 1) - 1) / inflationRate);
   const solarSavingsAnnual = (28512 * degradation) * 5.22 * Math.pow(1 + inflationRate, i);
   // Simple linear accumulation for static data (approx)
   const solarCumulative = (solarSavingsAnnual * (i + 1)) - INVESTMENT_COST;
@@ -80,6 +80,11 @@ export const PROJECTION_DATA = Array.from({ length: 26 }, (_, i) => {
     year: i,
     cfeCumulative: Math.round(cfeCumulative),
     solarCumulative: Math.round(solarCumulative),
-    value: Math.round(solarCumulative) // For tooltip
+    value: Math.round(solarCumulative), // For tooltip
+    generation: 0,
+    savings: 0,
+    cfeWithoutSolar: 0,
+    cumulative: Math.round(solarCumulative),
+    roi: '0'
   };
 });
