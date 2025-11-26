@@ -100,7 +100,7 @@ const DiagnosisSection: React.FC<DiagnosisSectionProps> = ({ isPdfMode = false }
            </div>
            
            <p className="text-[#9F1239] text-sm leading-relaxed mb-6 font-medium">
-             Tu tarifa actual <span className="font-black">PDBT</span> te clasifica como "Excedente", pagando un precio promedio de <span className="font-bold bg-white px-1.5 py-0.5 rounded text-[#881337]">$5.22 MXN/kWh</span>.
+             Tu tarifa actual <span className="font-black">PDBT</span> te clasifica como "Excedente", pagando un precio promedio de <span className={`font-bold px-1.5 py-0.5 rounded text-[#881337] ${isPdfMode ? '' : 'bg-white'}`}>$5.22 MXN/kWh</span>.
            </p>
 
            <div className="w-full bg-white/50 h-2 rounded-full overflow-hidden mb-2">

@@ -47,7 +47,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
             
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-4 md:mb-6">
               Diagnóstico Energético <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E56334] to-[#DE3078]">
+              <span className={isPdfMode 
+                ? 'text-[#E56334]'
+                : 'text-transparent bg-clip-text bg-gradient-to-r from-[#E56334] to-[#DE3078]'}>
                  & Viabilidad Financiera
               </span>
             </h1>
