@@ -6,11 +6,12 @@ import { FinancialAnalysis, SolarSystemSpecs } from '../types';
 interface HeroSectionProps {
   financials?: FinancialAnalysis;
   system?: SolarSystemSpecs;
+  isPdfMode?: boolean;
 }
 
 const formatCurrency = (val: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(val);
 
-const HeroSection: React.FC<HeroSectionProps> = ({ financials, system }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode = false }) => {
   // Use dynamic values if available, otherwise fallback to constants
   const totalSavings = financials ? financials.totalSavings : TOTAL_SAVINGS_25Y;
   const roiYears = financials ? financials.paybackYears : ROI_YEARS;
@@ -21,7 +22,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system }) => {
       {/* Abstract Data Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-[50%] -left-[20%] w-[80%] h-[200%] bg-gradient-to-br from-[#E56334]/10 via-transparent to-transparent rotate-12 blur-3xl"></div>
-        <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
+        {/* Hide texture in PDF mode to avoid CORS/rendering issues */}
+        {!isPdfMode && (
+          <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
+        )}
       </div>
 
       <div className="relative px-5 py-8 md:px-12 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">

@@ -112,7 +112,7 @@ const App: React.FC = () => {
         }
       });
       
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/jpeg', 0.85);
       const pdfWidth = canvas.width;
       const pdfHeight = canvas.height;
       
@@ -123,7 +123,7 @@ const App: React.FC = () => {
         format: [pdfWidth, pdfHeight] // Custom format to match content exactly
       });
       
-      customPdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      customPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
       customPdf.save(`Diagnostico_Solar_${CLIENT_DATA.shortName.replace(/ /g, '_')}.pdf`);
       
     } catch (error) {
@@ -272,7 +272,7 @@ const App: React.FC = () => {
               </div>
            </div>
            
-           <HeroSection financials={financialAnalysis} system={solarSystem} />
+           <HeroSection financials={financialAnalysis} system={solarSystem} isPdfMode={true} />
            
            <section className="break-inside-avoid">
              <div className="flex items-center gap-4 mb-8 pb-4 border-b border-slate-100">
