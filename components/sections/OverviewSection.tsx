@@ -1,14 +1,14 @@
 
 import React from 'react';
-import { 
-  PiggyBank, Target, TrendingUp, Zap, AlertCircle, MapPin, 
+import {
+  PiggyBank, Target, TrendingUp, Zap, AlertCircle, MapPin,
   Receipt
 } from 'lucide-react';
 import { AreaChart, Area, PieChart, Pie, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from 'recharts';
 import Card from '../ui/Card';
 import SectionTitle from '../ui/SectionTitle';
-import { CLIENT_DATA, BILL_BREAKDOWN_DATA } from '../../constants';
 import { FinancialAnalysis, SolarSystemSpecs } from '../../types';
+import { useDiagnosis } from '../../context/DiagnosisContext';
 
 interface OverviewSectionProps {
   financials: FinancialAnalysis;
@@ -18,6 +18,7 @@ interface OverviewSectionProps {
 }
 
 const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, animatedValues, isPdfMode = false }) => {
+  const { data: diagnosisData } = useDiagnosis();
   
   const StatCard = ({ icon: Icon, label, value, suffix = "", trend = null, color = "orange" }: any) => {
     const colors: any = {
@@ -91,26 +92,26 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
                   <AlertCircle size={10} strokeWidth={3} />
                   Consumo Crítico
                 </span>
-                <h2 className="text-xl md:text-2xl font-black text-white leading-tight">{CLIENT_DATA.name}</h2>
+                <h2 className="text-xl md:text-2xl font-black text-white leading-tight">{diagnosisData.client.name}</h2>
                 <p className="text-slate-400 text-xs flex items-center gap-1.5 mt-2 font-medium">
                   <MapPin size={12} className="text-[#E56334]" />
-                  {CLIENT_DATA.address}
+                  {diagnosisData.client.address}
                 </p>
               </div>
               <div className="text-right hidden sm:block">
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Tarifa</p>
-                <p className="text-xl font-black text-[#E56334]">{CLIENT_DATA.tariff}</p>
+                <p className="text-xl font-black text-[#E56334]">{diagnosisData.client.tariff}</p>
               </div>
             </div>
             
             <div className="grid grid-cols-2 gap-4 md:gap-8 pt-5 md:pt-8 border-t border-slate-800">
               <div>
                 <p className="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Factura Actual</p>
-                <p className="text-xl md:text-3xl font-black text-white tracking-tight">${BILL_BREAKDOWN_DATA.total.toLocaleString()}</p>
+                <p className="text-xl md:text-3xl font-black text-white tracking-tight">${diagnosisData.billBreakdown.total.toLocaleString()}</p>
               </div>
               <div>
                 <p className="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Costo Promedio</p>
-                <p className="text-xl md:text-3xl font-black text-[#E56334] tracking-tight">$5.22<span className="text-[10px] md:text-sm text-slate-500 ml-1 font-bold">/kWh</span></p>
+                <p className="text-xl md:text-3xl font-black text-[#E56334] tracking-tight">${diagnosisData.consumptionAnalysis.avgCostPerKwh.toFixed(2)}<span className="text-[10px] md:text-sm text-slate-500 ml-1 font-bold">/kWh</span></p>
               </div>
             </div>
           </div>
@@ -151,18 +152,18 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
 
       {/* Bill Breakdown */}
       <Card className="p-5 md:p-8">
-        <SectionTitle 
-          icon={Receipt} 
-          title="Análisis del Recibo CFE" 
-          subtitle={`Desglose real del servicio ${CLIENT_DATA.serviceNumber}`} 
-          color="blue" 
+        <SectionTitle
+          icon={Receipt}
+          title="Análisis del Recibo CFE"
+          subtitle={`Desglose real del servicio ${diagnosisData.client.serviceNumber}`}
+          color="blue"
         />
         <div className="grid lg:grid-cols-2 gap-8 items-center mt-4">
           <div className="h-64 w-full min-w-0">
             <ResponsiveContainer width="99%" height="100%">
               <PieChart>
                 <Pie
-                  data={BILL_BREAKDOWN_DATA.components}
+                  data={diagnosisData.billBreakdown.components}
                   dataKey="value"
                   nameKey="name"
                   cx="50%"
@@ -173,7 +174,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
                   cornerRadius={6}
                   isAnimationActive={!isPdfMode}
                 >
-                  {BILL_BREAKDOWN_DATA.components.map((entry, index) => (
+                  {diagnosisData.billBreakdown.components.map((entry, index) => (
                     <Cell key={index} fill={entry.color} strokeWidth={0} />
                   ))}
                 </Pie>
@@ -185,7 +186,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
             </ResponsiveContainer>
           </div>
           <div className="space-y-3 md:space-y-4">
-            {BILL_BREAKDOWN_DATA.components.map((item, idx) => (
+            {diagnosisData.billBreakdown.components.map((item, idx) => (
               <div key={idx} className="group">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">

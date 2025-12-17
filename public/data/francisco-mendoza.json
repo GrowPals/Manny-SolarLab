@@ -1,0 +1,28 @@
+{
+  "client": {
+    "name": "MENDOZA GONZALEZ FRANCISCO",
+    "shortName": "Francisco Mendoza",
+    "address": "Blvd Arandas 1497",
+    "colony": "Las Plazas Sn Antonio Aya, Cortijo El Fracc",
+    "city": "Irapuato, Guanajuato",
+    "postalCode": "36600",
+    "serviceNumber": "046211200219",
+    "accountNumber": "28DP06A012822899",
+    "tariff": "PDBT",
+    "tariffName": "Pequeña Demanda Baja Tensión",
+    "meterNumber": "NN439X",
+    "currentPeriod": "19 Ago - 20 Oct 2025",
+    "dueDate": "03 Nov 2025",
+    "cutoffDate": "04 Nov 2025"
+  },
+  "consumption": [
+    { "period": "Oct 25", "month": "Oct", "year": 2025, "kwh": 3342, "amount": 17898, "days": 62, "season": "hot", "current": true },
+    { "period": "Ago 25", "month": "Ago", "year": 2025, "kwh": 783, "amount": 4285, "days": 62, "season": "hot" },
+    { "period": "Jun 25", "month": "Jun", "year": 2025, "kwh": 3181, "amount": 16653, "days": 63, "season": "hot" },
+    { "period": "Abr 25", "month": "Abr", "year": 2025, "kwh": 795, "amount": 4233, "days": 58, "season": "mild" },
+    { "period": "Feb 25", "month": "Feb", "year": 2025, "kwh": 1061, "amount": 5610, "days": 61, "season": "cold" },
+    { "period": "Dic 24", "month": "Dic", "year": 2024, "kwh": 372, "amount": 2031, "days": 58, "season": "cold" },
+    { "period": "Oct 24", "month": "Oct", "year": 2024, "kwh": 1101, "amount": 5828, "days": 62, "season": "hot" },
+    { "period": "Ago 24", "month": "Ago", "year": 2024, "kwh": 724, "amount": 3841, "days": 63, "season": "hot" }
+  ]
+}

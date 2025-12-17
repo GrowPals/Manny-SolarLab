@@ -1,0 +1,26 @@
+{
+  "client": {
+    "name": "APELLIDO PATERNO APELLIDO MATERNO NOMBRE(S)",
+    "shortName": "Nombre Corto",
+    "address": "Calle y número",
+    "colony": "Colonia",
+    "city": "Ciudad, Estado",
+    "postalCode": "00000",
+    "serviceNumber": "000000000000",
+    "accountNumber": "00XX00X000000000",
+    "tariff": "PDBT",
+    "tariffName": "Pequeña Demanda Baja Tensión",
+    "meterNumber": "XXXXXX",
+    "currentPeriod": "01 Ene - 01 Mar 2025",
+    "dueDate": "15 Mar 2025",
+    "cutoffDate": "16 Mar 2025"
+  },
+  "consumption": [
+    { "period": "Mar 25", "month": "Mar", "year": 2025, "kwh": 1000, "amount": 5000, "days": 60, "season": "mild", "current": true },
+    { "period": "Ene 25", "month": "Ene", "year": 2025, "kwh": 900, "amount": 4500, "days": 60, "season": "cold" },
+    { "period": "Nov 24", "month": "Nov", "year": 2024, "kwh": 850, "amount": 4200, "days": 60, "season": "mild" },
+    { "period": "Sep 24", "month": "Sep", "year": 2024, "kwh": 1200, "amount": 6000, "days": 60, "season": "hot" },
+    { "period": "Jul 24", "month": "Jul", "year": 2024, "kwh": 1300, "amount": 6500, "days": 60, "season": "hot" },
+    { "period": "May 24", "month": "May", "year": 2024, "kwh": 1100, "amount": 5500, "days": 60, "season": "hot" }
+  ]
+}

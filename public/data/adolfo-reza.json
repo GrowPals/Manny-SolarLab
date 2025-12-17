@@ -1,0 +1,39 @@
+{
+  "client": {
+    "name": "REZA SANMARTIN ISIDRO ADOLFO",
+    "shortName": "Adolfo Reza",
+    "address": "Blvd. Manuel J. Clouthier 1934",
+    "colony": "Col. Del Moral",
+    "city": "León, Guanajuato",
+    "postalCode": "37125",
+    "serviceNumber": "063240800626",
+    "accountNumber": "15DP07F011525465",
+    "tariff": "PDBT",
+    "tariffName": "Pequeña Demanda Baja Tensión",
+    "meterNumber": "NB134D",
+    "currentPeriod": "09 Sep - 07 Nov 2025",
+    "dueDate": "23 Nov 2025",
+    "cutoffDate": "24 Nov 2025"
+  },
+  "consumption": [
+    { "period": "Nov 25", "month": "Nov", "year": 2025, "kwh": 4251, "amount": 22201, "days": 59, "season": "mild", "current": true },
+    { "period": "Sep 25", "month": "Sep", "year": 2025, "kwh": 4154, "amount": 21842, "days": 60, "season": "hot" },
+    { "period": "Jul 25", "month": "Jul", "year": 2025, "kwh": 10261, "amount": 41766, "days": 114, "season": "hot" },
+    { "period": "Mar 25", "month": "Mar", "year": 2025, "kwh": 2370, "amount": 12019, "days": 29, "season": "mild" },
+    { "period": "Feb 25", "month": "Feb", "year": 2025, "kwh": 1867, "amount": 9647, "days": 33, "season": "cold" },
+    { "period": "Ene 25", "month": "Ene", "year": 2025, "kwh": 1616, "amount": 8449, "days": 29, "season": "cold" },
+    { "period": "Dic 24", "month": "Dic", "year": 2024, "kwh": 1389, "amount": 7196, "days": 29, "season": "cold" },
+    { "period": "Nov 24", "month": "Nov", "year": 2024, "kwh": 903, "amount": 4750, "days": 32, "season": "mild" },
+    { "period": "Oct 24", "month": "Oct", "year": 2024, "kwh": 1745, "amount": 9208, "days": 77, "season": "mild" }
+  ],
+  "billBreakdown": {
+    "subtotalEnergy": 17766.02,
+    "iva": 2842.56,
+    "dap": 1591.96,
+    "total": 22201.35
+  },
+  "systemDefaults": {
+    "systemSize": 17.6,
+    "inflationRate": 5
+  }
+}

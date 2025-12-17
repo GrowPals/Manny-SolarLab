@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { 
-  BarChart2, Activity, Sun, Wallet, Scale, Download, Loader2, FileText
+import {
+  BarChart2, Activity, Sun, Wallet, Scale, Download, Loader2, FileText, AlertCircle
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import MannyLogo from './components/MannyLogo';
 import { calculateSolarSystem, calculateFinancials } from './utils/calculations';
-import { CLIENT_DATA } from './constants';
+import { useDiagnosis } from './context/DiagnosisContext';
 
 // Sections
 import OverviewSection from './components/sections/OverviewSection';
@@ -19,22 +19,36 @@ import HeroSection from './components/HeroSection';
 import DiagnosisSection from './components/DiagnosisSection';
 
 const App: React.FC = () => {
+  const { data: diagnosisData, isLoading, error } = useDiagnosis();
   const [activeSection, setActiveSection] = useState('overview');
   const [isExporting, setIsExporting] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
   
-  // State for calculations
-  const [inflationRate, setInflationRate] = useState(5);
-  const [systemSize, setSystemSize] = useState(17.6);
+  // State for calculations - initialize from diagnosis data
+  const [inflationRate, setInflationRate] = useState(diagnosisData.systemDefaults.inflationRate);
+  const [systemSize, setSystemSize] = useState(diagnosisData.systemDefaults.systemSize);
+
+  // Update state when diagnosis data changes
+  useEffect(() => {
+    setInflationRate(diagnosisData.systemDefaults.inflationRate);
+    setSystemSize(diagnosisData.systemDefaults.systemSize);
+  }, [diagnosisData]);
   
   // Animation states
   const [animatedValues, setAnimatedValues] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAnimYear, setCurrentAnimYear] = useState(0);
 
-  // Derived Data
-  const solarSystem = useMemo(() => calculateSolarSystem(systemSize), [systemSize]);
-  const financialAnalysis = useMemo(() => calculateFinancials(systemSize, solarSystem, inflationRate), [systemSize, solarSystem, inflationRate]);
+  // Derived Data - usando análisis de consumo real del cliente
+  const consumptionAnalysis = diagnosisData.consumptionAnalysis;
+  const solarSystem = useMemo(
+    () => calculateSolarSystem(systemSize, consumptionAnalysis),
+    [systemSize, consumptionAnalysis]
+  );
+  const financialAnalysis = useMemo(
+    () => calculateFinancials(systemSize, solarSystem, inflationRate, consumptionAnalysis),
+    [systemSize, solarSystem, inflationRate, consumptionAnalysis]
+  );
 
   // Number Animation Effect
   useEffect(() => {
@@ -139,7 +153,7 @@ const App: React.FC = () => {
       });
       
       customPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-      customPdf.save(`Diagnostico_Solar_${CLIENT_DATA.shortName.replace(/ /g, '_')}.pdf`);
+      customPdf.save(`Diagnostico_Solar_${diagnosisData.client.shortName.replace(/ /g, '_')}.pdf`);
       
     } catch (error) {
       console.error('PDF Export failed:', error);
@@ -148,6 +162,37 @@ const App: React.FC = () => {
       setIsExporting(false);
     }
   };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 size={48} className="animate-spin text-[#E56334] mx-auto mb-4" />
+          <p className="text-slate-600 font-medium">Cargando diagnóstico...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="text-center max-w-md">
+          <AlertCircle size={48} className="text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">Diagnóstico no encontrado</h1>
+          <p className="text-slate-600 mb-6">{error}</p>
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors"
+          >
+            Ir al inicio
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-[#E56334] selection:text-white pb-20 md:pb-0 overflow-x-hidden">
@@ -382,10 +427,10 @@ const App: React.FC = () => {
             <div className="border-t border-slate-800 pt-6 md:border-0 md:pt-0">
               <h4 className="font-bold text-xs md:text-sm mb-3 md:mb-4 text-white uppercase tracking-wider">Cliente</h4>
               <div className="space-y-1.5 md:space-y-2">
-                <p className="text-slate-400 text-xs md:text-sm font-medium">{CLIENT_DATA.name}</p>
+                <p className="text-slate-400 text-xs md:text-sm font-medium">{diagnosisData.client.name}</p>
                 <div className="flex items-center justify-center md:justify-start gap-2 text-slate-500 text-[10px] md:text-xs">
                    <div className="w-1.5 h-1.5 rounded-full bg-[#E56334]"></div>
-                   {CLIENT_DATA.city}, {CLIENT_DATA.postalCode}
+                   {diagnosisData.client.city}, {diagnosisData.client.postalCode}
                 </div>
               </div>
             </div>

@@ -4,13 +4,25 @@ import { Activity, Snowflake, ThermometerSun, Leaf, AlertCircle } from 'lucide-r
 import { ComposedChart, Bar, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import Card from '../ui/Card';
 import SectionTitle from '../ui/SectionTitle';
-import { CONSUMPTION_HISTORY } from '../../constants';
+import { useDiagnosis } from '../../context/DiagnosisContext';
 
 interface ConsumptionSectionProps {
   isPdfMode?: boolean;
 }
 
+// Formatear número grande a formato corto (1400 -> "1.4k")
+const formatShortNumber = (num: number): string => {
+  if (num >= 1000) {
+    return `${(num / 1000).toFixed(1)}k`;
+  }
+  return num.toString();
+};
+
 const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = false }) => {
+  const { data: diagnosisData } = useDiagnosis();
+  const consumptionHistory = diagnosisData.consumption;
+  const analysis = diagnosisData.consumptionAnalysis;
+
   return (
     <div className={`space-y-6 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       {/* Consumption Chart */}
@@ -19,7 +31,7 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
         
         <div className="h-60 md:h-80 w-full mt-6 min-w-0">
           <ResponsiveContainer width="99%" height="100%">
-            <ComposedChart data={CONSUMPTION_HISTORY} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <ComposedChart data={consumptionHistory} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="consumptionGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.3} />
@@ -47,9 +59,9 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
                 barSize={isPdfMode ? 40 : undefined}
                 isAnimationActive={!isPdfMode}
               >
-                {CONSUMPTION_HISTORY.map((entry, index) => (
-                  <Cell 
-                    key={index} 
+                {consumptionHistory.map((entry, index) => (
+                  <Cell
+                    key={index}
                     fill={entry.current ? '#E56334' : '#3B82F6'}
                     opacity={entry.current ? 1 : 0.8}
                   />
@@ -75,35 +87,35 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
             </div>
           </div>
           <div className="text-right sm:text-left">
-             <p className="text-lg md:text-3xl font-black text-blue-600 tracking-tight">~1.4k</p>
+             <p className="text-lg md:text-3xl font-black text-blue-600 tracking-tight">~{formatShortNumber(analysis.seasonalAvg.cold)}</p>
              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes (Promedio)</p>
           </div>
         </Card>
-        
+
         <Card className="p-4 md:p-5 border-orange-100 shadow-lg shadow-orange-100/50 flex sm:block items-center justify-between sm:justify-start">
           <div className="flex items-center sm:block gap-3 sm:gap-0">
             <ThermometerSun className="text-[#E56334] sm:mb-4 drop-shadow-sm" size={20} strokeWidth={2} />
             <div>
               <h4 className="font-bold text-slate-900 text-xs md:text-sm mb-0.5">Temporada Cálida</h4>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Mar - Ago</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">May - Sep</p>
             </div>
           </div>
           <div className="text-right sm:text-left">
-             <p className="text-lg md:text-3xl font-black text-[#E56334] tracking-tight">~2.4k</p>
+             <p className="text-lg md:text-3xl font-black text-[#E56334] tracking-tight">~{formatShortNumber(analysis.seasonalAvg.hot)}</p>
              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes (Alto Consumo)</p>
           </div>
         </Card>
-        
+
         <Card className="p-4 md:p-5 border-emerald-100 shadow-lg shadow-emerald-100/50 flex sm:block items-center justify-between sm:justify-start">
           <div className="flex items-center sm:block gap-3 sm:gap-0">
             <Leaf className="text-emerald-500 sm:mb-4 drop-shadow-sm" size={20} strokeWidth={2} />
             <div>
               <h4 className="font-bold text-slate-900 text-xs md:text-sm mb-0.5">Transición</h4>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Sep - Oct</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider sm:mb-4">Mar - Abr, Oct</p>
             </div>
           </div>
           <div className="text-right sm:text-left">
-             <p className="text-lg md:text-3xl font-black text-emerald-600 tracking-tight">~1.5k</p>
+             <p className="text-lg md:text-3xl font-black text-emerald-600 tracking-tight">~{formatShortNumber(analysis.seasonalAvg.mild)}</p>
              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes</p>
           </div>
         </Card>
@@ -119,10 +131,10 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
              <AlertCircle size={18} />
           </div>
           <div>
-            <h4 className="font-bold text-base md:text-xl mb-1 md:mb-2">Diagnóstico de Tarifa PDBT</h4>
+            <h4 className="font-bold text-base md:text-xl mb-1 md:mb-2">Diagnóstico de Tarifa {diagnosisData.client.tariff}</h4>
             <p className="text-white/90 text-[10px] md:text-sm leading-relaxed max-w-3xl font-medium">
-              Su tarifa actual (Pequeña Demanda Baja Tensión) cobra la energía a precio excedente ($5.22/kWh con IVA).
-              Sin paneles, su gasto anual base es de <strong>$133,000 MXN</strong> y aumentando.
+              Su tarifa actual ({diagnosisData.client.tariffName}) cobra la energía a precio excedente (${analysis.avgCostPerKwh.toFixed(2)}/kWh con IVA).
+              Sin paneles, su gasto anual base es de <strong>${analysis.totalAmountYear.toLocaleString()} MXN</strong> y aumentando.
             </p>
           </div>
         </div>

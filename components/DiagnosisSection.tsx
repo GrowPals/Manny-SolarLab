@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
-import { CONSUMPTION_HISTORY } from '../constants';
 import { AlertOctagon, TrendingUp, Zap, FileWarning } from 'lucide-react';
+import { useDiagnosis } from '../context/DiagnosisContext';
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -26,6 +26,10 @@ interface DiagnosisSectionProps {
 }
 
 const DiagnosisSection: React.FC<DiagnosisSectionProps> = ({ isPdfMode = false }) => {
+  const { data: diagnosisData } = useDiagnosis();
+  const consumptionHistory = diagnosisData.consumption;
+  const currentConsumption = consumptionHistory.find(c => c.current) || consumptionHistory[0];
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Visual Chart Card */}
@@ -41,38 +45,38 @@ const DiagnosisSection: React.FC<DiagnosisSectionProps> = ({ isPdfMode = false }
             <p className="text-slate-500 mt-2 text-xs md:text-sm font-medium">Tendencia histórica de los últimos periodos facturados</p>
           </div>
           <div className="text-right hidden sm:block">
-             <div className="text-4xl font-black text-slate-900 tracking-tight">4,251 kWh</div>
+             <div className="text-4xl font-black text-slate-900 tracking-tight">{currentConsumption.kwh.toLocaleString()} kWh</div>
              <div className="text-xs font-bold text-[#D14656] uppercase tracking-wider mt-1">Último Bimestre</div>
           </div>
         </div>
 
         <div className="h-[300px] md:h-[350px] w-full relative z-10 min-w-0">
           <ResponsiveContainer width="99%" height="100%">
-            <BarChart data={CONSUMPTION_HISTORY} margin={{ top: 20, right: 0, left: -20, bottom: 0 }}>
+            <BarChart data={consumptionHistory} margin={{ top: 20, right: 0, left: -20, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis 
-                dataKey="period" 
-                tick={{ fontSize: 10, fill: '#64748b' }} 
+              <XAxis
+                dataKey="period"
+                tick={{ fontSize: 10, fill: '#64748b' }}
                 axisLine={false}
                 tickLine={false}
-                interval={0} 
+                interval={0}
               />
-              <YAxis 
-                tick={{ fontSize: 10, fill: '#64748b' }} 
+              <YAxis
+                tick={{ fontSize: 10, fill: '#64748b' }}
                 axisLine={false}
                 tickLine={false}
               />
               <Tooltip cursor={{ fill: '#f8fafc' }} content={<CustomTooltip />} />
-              <Bar 
-                dataKey="kwh" 
-                radius={[6, 6, 0, 0]} 
+              <Bar
+                dataKey="kwh"
+                radius={[6, 6, 0, 0]}
                 barSize={isPdfMode ? 40 : undefined}
                 isAnimationActive={!isPdfMode}
               >
-                {CONSUMPTION_HISTORY.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={index === 0 ? 'url(#gradientRed)' : '#cbd5e1'} 
+                {consumptionHistory.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={entry.current ? 'url(#gradientRed)' : '#cbd5e1'}
                     className="hover:opacity-80 transition-opacity"
                   />
                 ))}
@@ -93,14 +97,14 @@ const DiagnosisSection: React.FC<DiagnosisSectionProps> = ({ isPdfMode = false }
         {/* Card 1: The Issue */}
         <div className="bg-[#FFF1F2] rounded-3xl p-6 md:p-8 border border-[#FECDD3] relative overflow-hidden group hover:shadow-lg transition-shadow duration-300">
            <div className="absolute -right-6 -top-6 w-24 h-24 bg-[#FDA4AF] rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500"></div>
-           
+
            <div className="flex items-center gap-4 mb-6">
               <AlertOctagon size={28} className="text-[#F43F5E]" />
               <h4 className="font-bold text-[#881337] text-lg">Tarifa Penalizada</h4>
            </div>
-           
+
            <p className="text-[#9F1239] text-sm leading-relaxed mb-6 font-medium">
-             Tu tarifa actual <span className="font-black">PDBT</span> te clasifica como "Excedente", pagando un precio promedio de <span className={`font-bold px-1.5 py-0.5 rounded text-[#881337] ${isPdfMode ? '' : 'bg-white'}`}>$5.22 MXN/kWh</span>.
+             Tu tarifa actual <span className="font-black">{diagnosisData.client.tariff}</span> te clasifica como "Excedente", pagando un precio promedio de <span className={`font-bold px-1.5 py-0.5 rounded text-[#881337] ${isPdfMode ? '' : 'bg-white'}`}>${diagnosisData.consumptionAnalysis.avgCostPerKwh.toFixed(2)} MXN/kWh</span>.
            </p>
 
            <div className="w-full bg-white/50 h-2 rounded-full overflow-hidden mb-2">
@@ -118,15 +122,15 @@ const DiagnosisSection: React.FC<DiagnosisSectionProps> = ({ isPdfMode = false }
               <TrendingUp size={28} className="text-slate-700" />
               <h4 className="font-bold text-slate-900 text-lg">Proyección Gasto</h4>
            </div>
-           
+
            <div className="flex flex-col gap-1 mb-6">
               <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">Gasto Anual Estimado</span>
-              <span className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">$133,000</span>
+              <span className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">${diagnosisData.consumptionAnalysis.totalAmountYear.toLocaleString()}</span>
            </div>
 
            <div className="flex items-start gap-3 text-xs font-medium text-slate-600 bg-slate-50 p-4 rounded-2xl">
               <FileWarning size={16} className="mt-0.5 text-orange-500 shrink-0" />
-              <p>Tu consumo ha crecido un <strong>370%</strong> en el último año (903 vs 4,251 kWh). Sin acción, este gasto se duplicará en 4 años.</p>
+              <p>Tu consumo ha {diagnosisData.consumptionAnalysis.growthRate > 0 ? 'crecido' : 'variado'} un <strong>{Math.abs(diagnosisData.consumptionAnalysis.growthRate)}%</strong> ({diagnosisData.consumptionAnalysis.minKwh.toLocaleString()} vs {diagnosisData.consumptionAnalysis.maxKwh.toLocaleString()} kWh). Sin acción, este gasto seguirá aumentando con la inflación.</p>
            </div>
         </div>
       </div>

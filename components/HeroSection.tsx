@@ -1,7 +1,8 @@
 import React from 'react';
-import { TOTAL_SAVINGS_25Y, ROI_YEARS, SYSTEM_SIZE_KW, CLIENT_DATA } from '../constants';
+import { TOTAL_SAVINGS_25Y, ROI_YEARS, SYSTEM_SIZE_KW } from '../constants';
 import { FileBarChart, AlertTriangle, Activity } from 'lucide-react';
 import { FinancialAnalysis, SolarSystemSpecs } from '../types';
+import { useDiagnosis } from '../context/DiagnosisContext';
 
 interface HeroSectionProps {
   financials?: FinancialAnalysis;
@@ -12,6 +13,8 @@ interface HeroSectionProps {
 const formatCurrency = (val: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(val);
 
 const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode = false }) => {
+  const { data: diagnosisData } = useDiagnosis();
+
   // Use dynamic values if available, otherwise fallback to constants
   const totalSavings = financials ? financials.totalSavings : TOTAL_SAVINGS_25Y;
   const roiYears = financials ? financials.paybackYears : ROI_YEARS;
@@ -54,7 +57,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
               </span>
             </h1>
             <p className="text-slate-400 text-sm md:text-lg max-w-xl leading-relaxed font-medium">
-              Reporte técnico para <strong className="text-white">{CLIENT_DATA.shortName}</strong>. Análisis de perfil de consumo, ineficiencias tarifarias y proyección de rentabilidad patrimonial.
+              Reporte técnico para <strong className="text-white">{diagnosisData.client.shortName}</strong>. Análisis de perfil de consumo, ineficiencias tarifarias y proyección de rentabilidad patrimonial.
             </p>
           </div>
 
