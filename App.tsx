@@ -405,29 +405,39 @@ const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white border-t border-slate-800 pb-24 md:pb-0">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center md:text-left">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-12">
+          {/* Mobile: Compact single row */}
+          <div className="md:hidden flex items-center justify-between gap-3">
+            <MannyLogo textSize="text-lg" />
+            <div className="text-right">
+              <p className="text-slate-400 text-[10px] font-medium truncate max-w-[140px]">{diagnosisData.client.shortName}</p>
+              <p className="text-slate-600 text-[8px] font-bold uppercase tracking-wider">© 2025 Manny</p>
+            </div>
+          </div>
+
+          {/* Desktop: Full layout */}
+          <div className="hidden md:grid grid-cols-3 gap-12 text-left">
             <div>
-              <div className="mb-4 md:mb-6 opacity-80 hover:opacity-100 transition-opacity flex justify-center md:justify-start">
-                 <MannyLogo textSize="text-2xl md:text-3xl" />
+              <div className="mb-6 opacity-80 hover:opacity-100 transition-opacity">
+                 <MannyLogo textSize="text-3xl" />
               </div>
-              <p className="text-slate-400 text-xs md:text-sm leading-relaxed max-w-xs mx-auto md:mx-0 font-medium">
+              <p className="text-slate-400 text-sm leading-relaxed max-w-xs font-medium">
                 Ingeniería especializada en sistemas fotovoltaicos y eficiencia energética.
               </p>
             </div>
-            
-            <div className="border-t border-slate-800 pt-6 md:border-0 md:pt-0">
-              <h4 className="font-bold text-xs md:text-sm mb-3 md:mb-4 text-white uppercase tracking-wider">Cliente</h4>
-              <div className="space-y-1.5 md:space-y-2">
-                <p className="text-slate-400 text-xs md:text-sm font-medium">{diagnosisData.client.name}</p>
-                <div className="flex items-center justify-center md:justify-start gap-2 text-slate-500 text-[10px] md:text-xs">
+
+            <div>
+              <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Cliente</h4>
+              <div className="space-y-2">
+                <p className="text-slate-400 text-sm font-medium">{diagnosisData.client.name}</p>
+                <div className="flex items-center gap-2 text-slate-500 text-xs">
                    <div className="w-1.5 h-1.5 rounded-full bg-[#E56334]"></div>
                    {diagnosisData.client.city}, {diagnosisData.client.postalCode}
                 </div>
               </div>
             </div>
 
-            <div className="border-t border-slate-800 pt-6 md:border-0 md:pt-0 hidden md:block">
+            <div>
               <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Detalles</h4>
               <p className="text-slate-400 text-sm font-medium mb-2">{diagnosisData.client.currentPeriod}</p>
               <p className="text-slate-500 text-xs leading-relaxed border-l-2 border-[#E56334] pl-3">
@@ -435,9 +445,9 @@ const App: React.FC = () => {
               </p>
             </div>
           </div>
-          
-          <div className="border-t border-slate-800 mt-8 md:mt-12 pt-6 md:pt-8 text-center">
-            <p className="text-slate-600 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">© 2025 Manny Solar</p>
+
+          <div className="hidden md:block border-t border-slate-800 mt-12 pt-8 text-center">
+            <p className="text-slate-600 text-[10px] font-bold uppercase tracking-[0.2em]">© 2025 Manny Solar</p>
           </div>
         </div>
       </footer>

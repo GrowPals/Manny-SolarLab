@@ -140,31 +140,31 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
       </div>
 
       {/* Final Summary */}
-      <Card className="p-4 md:p-10 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border-none text-center relative overflow-hidden group shadow-2xl" glow>
-        <div className="absolute top-0 left-0 w-full h-1 md:h-1.5 bg-gradient-to-r from-[#E56334] to-[#DE3078]"></div>
+      <Card className="p-3 md:p-10 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border-none text-center relative overflow-hidden group shadow-2xl" glow>
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#E56334] to-[#DE3078]"></div>
 
-        <Sparkles className="mx-auto text-yellow-400 mb-2 md:mb-6 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" size={20} />
-        <h3 className="text-lg md:text-4xl font-black mb-2 md:mb-4 tracking-tight">Dictamen Final</h3>
-        <p className="text-slate-400 text-[9px] md:text-base max-w-2xl mx-auto mb-4 md:mb-12 leading-relaxed font-medium px-2">
+        <Sparkles className="mx-auto text-yellow-400 mb-1 md:mb-6 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" size={16} />
+        <h3 className="text-sm md:text-4xl font-black mb-1 md:mb-4 tracking-tight">Dictamen Final</h3>
+        <p className="text-slate-400 text-[8px] md:text-base max-w-2xl mx-auto mb-2 md:mb-12 leading-relaxed font-medium px-1">
           La implementación fotovoltaica es la decisión financiera óptima con riesgo técnico mínimo.
         </p>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 max-w-5xl mx-auto mb-2">
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-lg md:text-4xl font-black text-emerald-400 mb-0.5 md:mb-2 tracking-tight">{financials.paybackYears}</p>
-              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Payback</p>
+          <div className="grid grid-cols-4 gap-1.5 md:gap-6 max-w-5xl mx-auto">
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-2 md:p-8 border transition-colors`}>
+              <p className="text-sm md:text-4xl font-black text-emerald-400 mb-0 md:mb-2 tracking-tight">{financials.paybackYears}</p>
+              <p className="text-[7px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider">Payback</p>
             </div>
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-lg md:text-4xl font-black text-purple-400 mb-0.5 md:mb-2 tracking-tight">{financials.irr}%</p>
-              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">TIR</p>
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-2 md:p-8 border transition-colors`}>
+              <p className="text-sm md:text-4xl font-black text-purple-400 mb-0 md:mb-2 tracking-tight">{financials.irr}%</p>
+              <p className="text-[7px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider">TIR</p>
             </div>
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-lg md:text-4xl font-black text-blue-400 mb-0.5 md:mb-2 tracking-tight">{system.coverage}%</p>
-              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cobertura</p>
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-2 md:p-8 border transition-colors`}>
+              <p className="text-sm md:text-4xl font-black text-blue-400 mb-0 md:mb-2 tracking-tight">{system.coverage}%</p>
+              <p className="text-[7px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider">Cobertura</p>
             </div>
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-lg md:text-4xl font-black text-orange-400 mb-0.5 md:mb-2 tracking-tight">25</p>
-              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Garantía</p>
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-2 md:p-8 border transition-colors`}>
+              <p className="text-sm md:text-4xl font-black text-orange-400 mb-0 md:mb-2 tracking-tight">25</p>
+              <p className="text-[7px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider">Garantía</p>
             </div>
           </div>
       </Card>
