@@ -36,8 +36,6 @@ const App: React.FC = () => {
   
   // Animation states
   const [animatedValues, setAnimatedValues] = useState({});
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentAnimYear, setCurrentAnimYear] = useState(0);
 
   // Derived Data - usando análisis de consumo real del cliente
   const consumptionAnalysis = diagnosisData.consumptionAnalysis;
@@ -85,18 +83,6 @@ const App: React.FC = () => {
     
     return () => clearInterval(timer);
   }, [financialAnalysis, solarSystem]);
-
-  // Timeline Animation Effect
-  useEffect(() => {
-    if (isPlaying && currentAnimYear < 25) {
-      const timer = setTimeout(() => {
-        setCurrentAnimYear(prev => prev + 1);
-      }, 100); // Speed of animation
-      return () => clearTimeout(timer);
-    } else if (currentAnimYear >= 25) {
-      setIsPlaying(false);
-    }
-  }, [isPlaying, currentAnimYear]);
 
   const navItems = [
     { id: 'overview', label: 'Resumen', icon: BarChart2 },
@@ -271,14 +257,10 @@ const App: React.FC = () => {
         )}
         {activeSection === 'financial' && (
           <div className="animate-in fade-in duration-500">
-            <FinancialSection 
+            <FinancialSection
               financials={financialAnalysis}
               inflationRate={inflationRate}
               setInflationRate={setInflationRate}
-              isPlaying={isPlaying}
-              setIsPlaying={setIsPlaying}
-              currentAnimYear={currentAnimYear}
-              setCurrentAnimYear={setCurrentAnimYear}
             />
           </div>
         )}
@@ -388,15 +370,10 @@ const App: React.FC = () => {
                <Wallet size={32} className="text-slate-900" strokeWidth={2.5} />
                <h2 className="text-3xl font-black text-slate-900">Viabilidad Financiera</h2>
              </div>
-             {/* Disable playing/animations for PDF view */}
-             <FinancialSection 
-               financials={financialAnalysis} 
-               inflationRate={inflationRate} 
-               setInflationRate={() => {}} 
-               isPlaying={false} 
-               setIsPlaying={() => {}} 
-               currentAnimYear={25} 
-               setCurrentAnimYear={() => {}}
+             <FinancialSection
+               financials={financialAnalysis}
+               inflationRate={inflationRate}
+               setInflationRate={() => {}}
                isPdfMode={true}
              />
            </section>
