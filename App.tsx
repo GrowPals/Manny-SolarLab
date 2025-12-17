@@ -6,7 +6,7 @@ import {
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import MannyLogo from './components/MannyLogo';
-import { calculateSolarSystem, calculateFinancials } from './utils/calculations';
+import { calculateSolarSystem, calculateFinancials, calculateOptimalSystemSize } from './utils/calculations';
 import { useDiagnosis } from './context/DiagnosisContext';
 
 // Sections
@@ -41,6 +41,10 @@ const App: React.FC = () => {
 
   // Derived Data - usando análisis de consumo real del cliente
   const consumptionAnalysis = diagnosisData.consumptionAnalysis;
+  const optimalSystemSize = useMemo(
+    () => calculateOptimalSystemSize(consumptionAnalysis),
+    [consumptionAnalysis]
+  );
   const solarSystem = useMemo(
     () => calculateSolarSystem(systemSize, consumptionAnalysis),
     [systemSize, consumptionAnalysis]
@@ -257,10 +261,11 @@ const App: React.FC = () => {
         )}
         {activeSection === 'system' && (
           <div className="animate-in fade-in duration-500">
-            <SystemSection 
+            <SystemSection
               systemSize={systemSize}
               setSystemSize={setSystemSize}
               solarSystem={solarSystem}
+              optimalSize={optimalSystemSize}
             />
           </div>
         )}
@@ -375,7 +380,7 @@ const App: React.FC = () => {
                <Sun size={32} className="text-slate-900" strokeWidth={2.5} />
                <h2 className="text-3xl font-black text-slate-900">Solución Técnica</h2>
              </div>
-             <SystemSection systemSize={systemSize} setSystemSize={setSystemSize} solarSystem={solarSystem} isPdfMode={true} />
+             <SystemSection systemSize={systemSize} setSystemSize={setSystemSize} solarSystem={solarSystem} optimalSize={optimalSystemSize} isPdfMode={true} />
            </section>
 
            <section className="break-inside-avoid">

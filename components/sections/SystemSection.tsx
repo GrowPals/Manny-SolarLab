@@ -9,10 +9,15 @@ interface SystemSectionProps {
   systemSize: number;
   setSystemSize: (size: number) => void;
   solarSystem: SolarSystemSpecs;
+  optimalSize: number;
   isPdfMode?: boolean;
 }
 
-const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize, solarSystem, isPdfMode = false }) => {
+const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize, solarSystem, optimalSize, isPdfMode = false }) => {
+  // Calcular rango del slider dinámicamente basado en el tamaño óptimo
+  // Mínimo: 50% del óptimo (redondeado a 0.5), Máximo: 150% del óptimo
+  const sliderMin = Math.max(1, Math.round(optimalSize * 0.5 * 2) / 2);
+  const sliderMax = Math.round(optimalSize * 1.5 * 2) / 2;
   return (
     <div className={`space-y-6 md:space-y-8 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       
@@ -91,16 +96,16 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
                 <div
                   className="absolute h-6 w-6 rounded-full border-4 border-white shadow-md"
                   style={{
-                    left: `${((systemSize - 10) / 15) * 100}%`,
+                    left: `${((systemSize - sliderMin) / (sliderMax - sliderMin)) * 100}%`,
                     transform: 'translateX(-50%)',
                     background: '#E56334'
                   }}
                 />
               </div>
               <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                <span>10 kWp</span>
-                <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Rango Óptimo</span>
-                <span>25 kWp</span>
+                <span>{sliderMin} kWp</span>
+                <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Óptimo: {optimalSize.toFixed(1)} kWp</span>
+                <span>{sliderMax} kWp</span>
               </div>
             </div>
           ) : (
@@ -108,8 +113,8 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
               <div className="relative w-full h-10 flex items-center">
                 <input
                   type="range"
-                  min={10}
-                  max={25}
+                  min={sliderMin}
+                  max={sliderMax}
                   step={0.5}
                   value={systemSize}
                   onChange={(e) => setSystemSize(parseFloat(e.target.value))}
@@ -117,18 +122,18 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
                 />
               </div>
               <div className="flex justify-between text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider">
-                <span>10 kWp</span>
-                
+                <span>{sliderMin} kWp</span>
+
                 {/* Dynamic System Status Label */}
                 {parseFloat(solarSystem.coverage) < 80 ? (
                    <span className="text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100 shadow-sm">Subdimensionado</span>
                 ) : parseFloat(solarSystem.coverage) > 110 ? (
                    <span className="text-orange-500 bg-orange-50 px-3 py-1 rounded-full border border-orange-100 shadow-sm">Sobredimensionado</span>
                 ) : (
-                   <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Rango Óptimo</span>
+                   <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shadow-sm">Óptimo: {optimalSize.toFixed(1)} kWp</span>
                 )}
 
-                <span>25 kWp</span>
+                <span>{sliderMax} kWp</span>
               </div>
             </>
           )}
