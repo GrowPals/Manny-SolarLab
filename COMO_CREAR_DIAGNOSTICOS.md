@@ -75,12 +75,12 @@ Ajusta el tamaño del sistema según el consumo:
 ### Paso 5: Generar el link
 El link será:
 ```
-https://tu-dominio.com/?id=nombre-cliente
+https://solarlab.manny.mx/?id=nombre-cliente
 ```
 
 Por ejemplo, si el archivo es `public/data/maria-garcia.json`:
 ```
-https://tu-dominio.com/?id=maria-garcia
+https://solarlab.manny.mx/?id=maria-garcia
 ```
 
 ## Desplegar Cambios
@@ -140,7 +140,7 @@ Archivo: `public/data/juan-perez.json`
 }
 ```
 
-Link: `https://tu-dominio.com/?id=juan-perez`
+Link: `https://solarlab.manny.mx/?id=juan-perez`
 
 ---
 
@@ -148,8 +148,9 @@ Link: `https://tu-dominio.com/?id=juan-perez`
 
 | Cliente | URL |
 |---------|-----|
-| Adolfo Reza | `/?id=adolfo-reza` |
-| (Plantilla) | `/?id=plantilla` |
+| Adolfo Reza (default) | `https://solarlab.manny.mx/` |
+| Francisco Mendoza | `https://solarlab.manny.mx/?id=francisco-mendoza` |
+| Plantilla | `https://solarlab.manny.mx/?id=plantilla` |
 
 ---
 

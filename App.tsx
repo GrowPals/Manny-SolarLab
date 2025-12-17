@@ -334,7 +334,7 @@ const App: React.FC = () => {
               </div>
               <div className="text-right">
                 <h1 className="text-3xl font-black text-slate-900 tracking-tight">Diagnóstico Energético Integral</h1>
-                <p className="text-slate-500 text-lg font-medium mt-2">Noviembre 2025</p>
+                <p className="text-slate-500 text-lg font-medium mt-2">{diagnosisData.client.currentPeriod}</p>
               </div>
            </div>
            
@@ -437,7 +437,7 @@ const App: React.FC = () => {
 
             <div className="border-t border-slate-800 pt-6 md:border-0 md:pt-0 hidden md:block">
               <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Detalles</h4>
-              <p className="text-slate-400 text-sm font-medium mb-2">Noviembre 2025</p>
+              <p className="text-slate-400 text-sm font-medium mb-2">{diagnosisData.client.currentPeriod}</p>
               <p className="text-slate-500 text-xs leading-relaxed border-l-2 border-[#E56334] pl-3">
                 Proyecciones basadas en tarifas vigentes CFE.
               </p>

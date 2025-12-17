@@ -34,7 +34,7 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
                 <Info size={12} className="text-slate-300" />
               </span>
               <span className="font-bold text-red-600 text-sm md:text-lg">
-                ${financials.projection[1]?.cfeWithoutSolar.toLocaleString() || "133,000"}
+                ${financials.projection[1]?.cfeWithoutSolar.toLocaleString() || "—"}
               </span>
               {/* Tooltip simple */}
               <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-slate-800 text-white text-[10px] p-2 rounded shadow-lg w-48 z-10">
@@ -52,7 +52,7 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
                 </span>
               </div>
               <span className="font-bold text-red-600 text-sm md:text-lg">
-                ${financials.projection[10]?.cfeWithoutSolar.toLocaleString() || "217,000"}
+                ${financials.projection[10]?.cfeWithoutSolar.toLocaleString() || "—"}
               </span>
             </div>
 
@@ -66,7 +66,7 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
                 </span>
               </div>
               <span className="font-bold text-red-600 text-sm md:text-lg">
-                ${financials.projection[25]?.cfeWithoutSolar.toLocaleString() || "450,000"}
+                ${financials.projection[25]?.cfeWithoutSolar.toLocaleString() || "—"}
               </span>
             </div>
 

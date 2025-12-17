@@ -45,7 +45,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
                 )}
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E56334]"></span>
               </span>
-              <span className="text-xs font-mono font-medium text-slate-300 uppercase tracking-widest">Diagnóstico Generado: Nov 2025</span>
+              <span className="text-xs font-mono font-medium text-slate-300 uppercase tracking-widest">Diagnóstico: {diagnosisData.client.currentPeriod}</span>
             </div>
             
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-4 md:mb-6">
@@ -73,7 +73,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
                 <Activity className="text-emerald-500" size={20} />
                 <div>
                    <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Potencial de Optimización</div>
-                   <div className="text-sm font-semibold text-white">95% Reducción de Costos</div>
+                   <div className="text-sm font-semibold text-white">{system ? `${system.coverage}%` : '95%'} Cobertura Solar</div>
                 </div>
              </div>
           </div>
