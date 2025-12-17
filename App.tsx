@@ -261,6 +261,8 @@ const App: React.FC = () => {
               financials={financialAnalysis}
               inflationRate={inflationRate}
               setInflationRate={setInflationRate}
+              consumption={diagnosisData.consumption}
+              systemSize={systemSize}
             />
           </div>
         )}
@@ -374,6 +376,8 @@ const App: React.FC = () => {
                financials={financialAnalysis}
                inflationRate={inflationRate}
                setInflationRate={() => {}}
+               consumption={diagnosisData.consumption}
+               systemSize={systemSize}
                isPdfMode={true}
              />
            </section>
