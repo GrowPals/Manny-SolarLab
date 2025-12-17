@@ -13,18 +13,18 @@ interface ComparisonSectionProps {
 
 const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, system, isPdfMode = false }) => {
   return (
-    <div className={`space-y-6 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
-      
-      <div className="grid lg:grid-cols-2 gap-4 md:gap-8">
+    <div className={`space-y-4 md:space-y-6 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
+
+      <div className="grid lg:grid-cols-2 gap-3 md:gap-8">
         {/* Scenario A: Inaction */}
-        <Card className="p-5 md:p-8 border-2 border-red-100 bg-gradient-to-br from-red-50 to-white shadow-xl shadow-red-100/30">
-          <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-8">
-            <div className="bg-white p-2 rounded-full shadow-sm shrink-0">
-              <XCircle className="text-red-500 drop-shadow-sm" size={20} strokeWidth={2} />
+        <Card className="p-4 md:p-8 border-2 border-red-100 bg-gradient-to-br from-red-50 to-white shadow-xl shadow-red-100/30">
+          <div className="flex items-center gap-2 md:gap-4 mb-4 md:mb-8">
+            <div className="bg-white p-1.5 md:p-2 rounded-full shadow-sm shrink-0">
+              <XCircle className="text-red-500 drop-shadow-sm" size={18} strokeWidth={2} />
             </div>
             <div>
-              <h3 className="font-bold text-base md:text-2xl text-slate-900 tracking-tight leading-tight">Escenario A: Tendencial</h3>
-              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Status Quo (Seguir pagando)</p>
+              <h3 className="font-bold text-sm md:text-2xl text-slate-900 tracking-tight leading-tight">Escenario A: Tendencial</h3>
+              <p className="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Status Quo</p>
             </div>
           </div>
           
@@ -95,15 +95,15 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
         </Card>
 
         {/* Scenario B: Solar */}
-        <Card className="p-5 md:p-8 border-2 border-emerald-100 bg-gradient-to-br from-emerald-50 to-white shadow-xl shadow-emerald-100/30">
-          <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-8">
-            <div className="bg-white p-2 rounded-full shadow-sm shrink-0">
-              <CheckCircle2 className="text-emerald-500 drop-shadow-sm" size={20} strokeWidth={2} />
+        <Card className="p-4 md:p-8 border-2 border-emerald-100 bg-gradient-to-br from-emerald-50 to-white shadow-xl shadow-emerald-100/30">
+          <div className="flex items-center gap-2 md:gap-4 mb-4 md:mb-8">
+            <div className="bg-white p-1.5 md:p-2 rounded-full shadow-sm shrink-0">
+              <CheckCircle2 className="text-emerald-500 drop-shadow-sm" size={18} strokeWidth={2} />
             </div>
             <div>
-              <h3 className="font-bold text-base md:text-2xl text-slate-900 tracking-tight leading-tight">Escenario B: Implementación</h3>
-              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">
-                Sistema de {system.panels} paneles ({(system.panels * SYSTEM_CONSTANTS.PANEL_WATTS / 1000).toFixed(1)} kW)
+              <h3 className="font-bold text-sm md:text-2xl text-slate-900 tracking-tight leading-tight">Escenario B: Solar</h3>
+              <p className="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">
+                {system.panels} paneles · {(system.panels * SYSTEM_CONSTANTS.PANEL_WATTS / 1000).toFixed(1)} kW
               </p>
             </div>
           </div>
@@ -140,32 +140,31 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
       </div>
 
       {/* Final Summary */}
-      <Card className="p-5 md:p-10 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border-none text-center relative overflow-hidden group shadow-2xl" glow>
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#E56334] to-[#DE3078]"></div>
-        
-        <Sparkles className="mx-auto text-yellow-400 mb-3 md:mb-6 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" size={24} />
-        <h3 className="text-xl md:text-4xl font-black mb-3 md:mb-4 tracking-tight">Dictamen Final</h3>
-        <p className="text-slate-400 text-[10px] md:text-base max-w-2xl mx-auto mb-6 md:mb-12 leading-relaxed font-medium px-2">
-          Basado en el perfil de consumo analizado, la implementación del sistema fotovoltaico representa 
-          la decisión financiera óptima con un riesgo técnico despreciable.
+      <Card className="p-4 md:p-10 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border-none text-center relative overflow-hidden group shadow-2xl" glow>
+        <div className="absolute top-0 left-0 w-full h-1 md:h-1.5 bg-gradient-to-r from-[#E56334] to-[#DE3078]"></div>
+
+        <Sparkles className="mx-auto text-yellow-400 mb-2 md:mb-6 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" size={20} />
+        <h3 className="text-lg md:text-4xl font-black mb-2 md:mb-4 tracking-tight">Dictamen Final</h3>
+        <p className="text-slate-400 text-[9px] md:text-base max-w-2xl mx-auto mb-4 md:mb-12 leading-relaxed font-medium px-2">
+          La implementación fotovoltaica es la decisión financiera óptima con riesgo técnico mínimo.
         </p>
-        
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto mb-2">
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-xl md:text-4xl font-black text-emerald-400 mb-1 md:mb-2 tracking-tight">{financials.paybackYears}</p>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Años Payback</p>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 max-w-5xl mx-auto mb-2">
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
+              <p className="text-lg md:text-4xl font-black text-emerald-400 mb-0.5 md:mb-2 tracking-tight">{financials.paybackYears}</p>
+              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Payback</p>
             </div>
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-xl md:text-4xl font-black text-purple-400 mb-1 md:mb-2 tracking-tight">{financials.irr}%</p>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">TIR Anual</p>
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
+              <p className="text-lg md:text-4xl font-black text-purple-400 mb-0.5 md:mb-2 tracking-tight">{financials.irr}%</p>
+              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">TIR</p>
             </div>
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-xl md:text-4xl font-black text-blue-400 mb-1 md:mb-2 tracking-tight">{system.coverage}%</p>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Independencia</p>
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
+              <p className="text-lg md:text-4xl font-black text-blue-400 mb-0.5 md:mb-2 tracking-tight">{system.coverage}%</p>
+              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cobertura</p>
             </div>
-            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-xl md:rounded-3xl p-3 md:p-8 border transition-colors`}>
-              <p className="text-xl md:text-4xl font-black text-orange-400 mb-1 md:mb-2 tracking-tight">25</p>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Años Garantía</p>
+            <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15'} rounded-lg md:rounded-3xl p-3 md:p-8 border transition-colors`}>
+              <p className="text-lg md:text-4xl font-black text-orange-400 mb-0.5 md:mb-2 tracking-tight">25</p>
+              <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Garantía</p>
             </div>
           </div>
       </Card>

@@ -27,24 +27,24 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
       blue: "text-blue-500",
       purple: "text-purple-500"
     };
-    
+
     return (
-      <Card className="p-4 md:p-6 border border-slate-100 shadow-lg shadow-slate-200/50 hover:shadow-xl transition-shadow">
-        <div className="flex items-start justify-between mb-2">
-          <Icon size={24} className={`${colors[color]} drop-shadow-sm`} strokeWidth={2} />
+      <Card className="p-3 md:p-5 border border-slate-100 shadow-md hover:shadow-lg transition-shadow">
+        <div className="flex items-center justify-between mb-1 md:mb-2">
+          <Icon size={18} className={`${colors[color]} drop-shadow-sm md:w-6 md:h-6`} strokeWidth={2} />
           {trend && (
-            <div className={`flex items-center gap-1 text-[10px] md:text-[10px] font-bold px-2 py-1 rounded-full border
+            <div className={`hidden md:flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full border
               ${trend > 0 ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-red-50 text-red-600 border-red-100'}`}>
-              <TrendingUp size={10} />
+              <TrendingUp size={8} />
               {Math.abs(trend)}%
             </div>
           )}
         </div>
-        <div className="mt-2 md:mt-4">
-          <p className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight leading-none">
-            {value}<span className="text-[10px] md:text-sm text-slate-400 ml-1 font-bold">{suffix}</span>
+        <div className="mt-1 md:mt-3">
+          <p className="text-lg md:text-2xl font-black text-slate-900 tracking-tight leading-none">
+            {value}<span className="text-[9px] md:text-xs text-slate-400 ml-0.5 font-bold">{suffix}</span>
           </p>
-          <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">{label}</p>
+          <p className="text-[8px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">{label}</p>
         </div>
       </Card>
     );
@@ -53,30 +53,30 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
   return (
     <div className={`space-y-6 md:space-y-8 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       {/* Hero Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-        <StatCard 
-          icon={PiggyBank} 
-          label="Ahorro Anual" 
+      <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+        <StatCard
+          icon={PiggyBank}
+          label="Ahorro Anual"
           value={`$${(animatedValues.savings || 0).toLocaleString()}`}
           color="green"
           trend={90}
         />
-        <StatCard 
-          icon={Target} 
-          label="Retorno (ROI)" 
+        <StatCard
+          icon={Target}
+          label="Payback"
           value={animatedValues.payback || "0.0"}
           suffix="años"
           color="blue"
         />
-        <StatCard 
-          icon={TrendingUp} 
-          label="TIR (Retorno Anual)" 
+        <StatCard
+          icon={TrendingUp}
+          label="TIR Anual"
           value={`${financials.irr || 0}%`}
           color="purple"
         />
-        <StatCard 
-          icon={Zap} 
-          label="Cobertura" 
+        <StatCard
+          icon={Zap}
+          label="Cobertura"
           value={`${animatedValues.coverage || 0}%`}
           color="orange"
         />
@@ -119,8 +119,8 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
 
         <Card className="p-5 md:p-8">
           <SectionTitle icon={TrendingUp} title="Proyección de Ahorro" subtitle="Acumulado primeros 10 años" color="green" />
-          <div className="h-48 md:h-56 w-full -ml-2 min-w-0">
-            <ResponsiveContainer width="99%" height="100%">
+          <div className="h-48 md:h-56 w-full min-w-0" style={{ minHeight: '192px' }}>
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <AreaChart data={financials.projection.slice(0, 10)}>
                 <defs>
                   <linearGradient id="savingsGrad" x1="0" y1="0" x2="0" y2="1">
@@ -159,8 +159,8 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
           color="blue"
         />
         <div className="grid lg:grid-cols-2 gap-8 items-center mt-4">
-          <div className="h-64 w-full min-w-0">
-            <ResponsiveContainer width="99%" height="100%">
+          <div className="h-52 md:h-64 w-full min-w-0" style={{ minHeight: '208px' }}>
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <PieChart>
                 <Pie
                   data={diagnosisData.billBreakdown.components}

@@ -29,8 +29,8 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
       <Card className="p-5 md:p-8">
         <SectionTitle icon={Activity} title="Historial de Consumo" subtitle={`Últimos ${consumptionHistory.length} periodos de facturación`} color="blue" />
         
-        <div className="h-60 md:h-80 w-full mt-6 min-w-0">
-          <ResponsiveContainer width="99%" height="100%">
+        <div className="h-60 md:h-80 w-full mt-6 min-w-0" style={{ minHeight: '240px' }}>
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <ComposedChart data={consumptionHistory} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="consumptionGradient" x1="0" y1="0" x2="0" y2="1">
