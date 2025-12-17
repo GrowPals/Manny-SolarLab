@@ -27,7 +27,7 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
     <div className={`space-y-6 ${!isPdfMode ? 'animate-in fade-in slide-in-from-bottom-4 duration-700' : ''}`}>
       {/* Consumption Chart */}
       <Card className="p-5 md:p-8">
-        <SectionTitle icon={Activity} title="Historial de Consumo" subtitle="Comportamiento últimos 12 meses (kWh)" color="blue" />
+        <SectionTitle icon={Activity} title="Historial de Consumo" subtitle={`Últimos ${consumptionHistory.length} periodos de facturación`} color="blue" />
         
         <div className="h-60 md:h-80 w-full mt-6 min-w-0">
           <ResponsiveContainer width="99%" height="100%">
@@ -88,7 +88,7 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
           </div>
           <div className="text-right sm:text-left">
              <p className="text-lg md:text-3xl font-black text-blue-600 tracking-tight">~{formatShortNumber(analysis.seasonalAvg.cold)}</p>
-             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes (Promedio)</p>
+             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/periodo</p>
           </div>
         </Card>
 
@@ -102,7 +102,7 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
           </div>
           <div className="text-right sm:text-left">
              <p className="text-lg md:text-3xl font-black text-[#E56334] tracking-tight">~{formatShortNumber(analysis.seasonalAvg.hot)}</p>
-             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes (Alto Consumo)</p>
+             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/periodo</p>
           </div>
         </Card>
 
@@ -116,7 +116,7 @@ const ConsumptionSection: React.FC<ConsumptionSectionProps> = ({ isPdfMode = fal
           </div>
           <div className="text-right sm:text-left">
              <p className="text-lg md:text-3xl font-black text-emerald-600 tracking-tight">~{formatShortNumber(analysis.seasonalAvg.mild)}</p>
-             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/mes</p>
+             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">kWh/periodo</p>
           </div>
         </Card>
       </div>

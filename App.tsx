@@ -263,6 +263,9 @@ const App: React.FC = () => {
               setInflationRate={setInflationRate}
               consumption={diagnosisData.consumption}
               systemSize={systemSize}
+              setSystemSize={setSystemSize}
+              optimalSize={optimalSystemSize}
+              consumptionAnalysis={consumptionAnalysis}
             />
           </div>
         )}
@@ -378,6 +381,9 @@ const App: React.FC = () => {
                setInflationRate={() => {}}
                consumption={diagnosisData.consumption}
                systemSize={systemSize}
+               setSystemSize={() => {}}
+               optimalSize={optimalSystemSize}
+               consumptionAnalysis={consumptionAnalysis}
                isPdfMode={true}
              />
            </section>

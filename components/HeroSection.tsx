@@ -16,7 +16,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
   const { data: diagnosisData } = useDiagnosis();
 
   // Use dynamic values if available, otherwise fallback to constants
-  const totalSavings = financials ? financials.totalSavings : TOTAL_SAVINGS_25Y;
+  const totalCfeCost = financials ? financials.totalCfeCost : TOTAL_SAVINGS_25Y;
   const roiYears = financials ? financials.paybackYears : ROI_YEARS;
   const systemSize = system ? system.capacity.toFixed(1) : SYSTEM_SIZE_KW;
 
@@ -86,7 +86,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
                 <div className="text-slate-400 text-xs font-medium mb-1 flex items-center gap-1">
                   <FileBarChart size={14} /> Gasto Proyectado (25y)
                 </div>
-                <div className="text-2xl font-bold text-white tracking-tight">{formatCurrency(totalSavings)}</div>
+                <div className="text-2xl font-bold text-white tracking-tight">{formatCurrency(totalCfeCost)}</div>
                 <div className="text-xs text-[#E56334] mt-1 font-medium">Costo de Inacción</div>
              </div>
              <div className="p-6">

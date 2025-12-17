@@ -3,6 +3,7 @@ import React from 'react';
 import { XCircle, CheckCircle2, AlertTriangle, ShieldCheck, Sparkles, Info } from 'lucide-react';
 import Card from '../ui/Card';
 import { FinancialAnalysis, SolarSystemSpecs } from '../../types';
+import { SYSTEM_CONSTANTS } from '../../utils/calculations';
 
 interface ComparisonSectionProps {
   financials: FinancialAnalysis;
@@ -101,13 +102,18 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
             </div>
             <div>
               <h3 className="font-bold text-base md:text-2xl text-slate-900 tracking-tight leading-tight">Escenario B: Implementación</h3>
-              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">Eficiencia Tecnológica</p>
+              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mt-0.5">
+                Sistema de {system.panels} paneles ({(system.panels * SYSTEM_CONSTANTS.PANEL_WATTS / 1000).toFixed(1)} kW)
+              </p>
             </div>
           </div>
-          
+
           <div className="space-y-2 md:space-y-4">
             <div className="flex justify-between items-center py-2 md:py-3 border-b border-emerald-100/50">
-              <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">Inversión Neta</span>
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">Inversión Neta</span>
+                <span className="text-[10px] text-slate-400 font-medium">Después de deducción ISR</span>
+              </div>
               <span className="font-bold text-slate-900 text-sm md:text-lg">${financials.netCost.toLocaleString()}</span>
             </div>
             <div className="flex justify-between items-center py-2 md:py-3 border-b border-emerald-100/50">
@@ -115,7 +121,7 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
               <span className="font-bold text-emerald-600 text-sm md:text-lg">{financials.paybackYears} años</span>
             </div>
             <div className="flex justify-between items-center py-2 md:py-3 border-b border-emerald-100/50">
-              <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">Ahorro Total</span>
+              <span className="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-wide">Ahorro Total (25 años)</span>
               <span className="font-bold text-emerald-600 text-sm md:text-lg">${(financials.totalSavings/1000000).toFixed(1)}M</span>
             </div>
             <div className="flex justify-between items-center py-3 md:py-5 bg-emerald-100 rounded-xl md:rounded-2xl px-4 md:px-6 mt-3 md:mt-4">
