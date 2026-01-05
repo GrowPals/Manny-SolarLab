@@ -35,7 +35,12 @@ const App: React.FC = () => {
   }, [diagnosisData]);
   
   // Animation states
-  const [animatedValues, setAnimatedValues] = useState({});
+  const [animatedValues, setAnimatedValues] = useState({
+    savings: 0,
+    payback: '0.0',
+    roi: 0,
+    coverage: '0'
+  });
 
   // Derived Data - usando análisis de consumo real del cliente
   const consumptionAnalysis = diagnosisData.consumptionAnalysis;
@@ -55,10 +60,10 @@ const App: React.FC = () => {
   // Number Animation Effect
   useEffect(() => {
     const targets = {
-      savings: financialAnalysis.annualSavings,
-      payback: parseFloat(financialAnalysis.paybackYears),
-      roi: parseFloat(financialAnalysis.irr),
-      coverage: parseFloat(solarSystem.coverage)
+      savings: financialAnalysis.annualSavings || 0,
+      payback: parseFloat(financialAnalysis.paybackYears) || 0,
+      roi: parseFloat(financialAnalysis.irr) || 0,
+      coverage: parseFloat(solarSystem.coverage) || 0
     };
     
     const duration = 1000;

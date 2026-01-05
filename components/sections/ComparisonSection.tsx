@@ -159,7 +159,7 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({ financials, syste
               <p className={`${isPdfMode ? 'text-[10px]' : 'text-[7px] md:text-[10px]'} font-bold text-slate-400 uppercase tracking-wider`}>TIR</p>
             </div>
             <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700 rounded-3xl p-8' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15 rounded-lg md:rounded-3xl p-2 md:p-8'} border transition-colors`}>
-              <p className={`${isPdfMode ? 'text-4xl mb-2' : 'text-sm md:text-4xl mb-0 md:mb-2'} font-black text-blue-400 tracking-tight`}>{system.coverage}%</p>
+              <p className={`${isPdfMode ? 'text-4xl mb-2' : 'text-sm md:text-4xl mb-0 md:mb-2'} font-black text-blue-400 tracking-tight`}>{system.coverage || 0}%</p>
               <p className={`${isPdfMode ? 'text-[10px]' : 'text-[7px] md:text-[10px]'} font-bold text-slate-400 uppercase tracking-wider`}>Cobertura</p>
             </div>
             <div className={`${isPdfMode ? 'bg-slate-800 border-slate-700 rounded-3xl p-8' : 'bg-white/10 backdrop-blur-md border-white/10 hover:bg-white/15 rounded-lg md:rounded-3xl p-2 md:p-8'} border transition-colors`}>

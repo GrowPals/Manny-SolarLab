@@ -64,7 +64,7 @@ const SystemSection: React.FC<SystemSectionProps> = ({ systemSize, setSystemSize
           </div>
           <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 text-center border border-slate-100 shadow-sm hover:border-emerald-100 transition-all hover:shadow-lg hover:-translate-y-1">
             <Target className="mx-auto text-emerald-500 mb-2 md:mb-4 drop-shadow-sm" size={24} strokeWidth={2} />
-            <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{solarSystem.coverage}%</p>
+            <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{solarSystem.coverage || 0}%</p>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1 md:mt-2">Cobertura</p>
             <p className="text-[9px] text-slate-400 mt-1">de tu consumo</p>
           </div>

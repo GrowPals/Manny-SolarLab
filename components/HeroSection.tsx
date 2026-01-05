@@ -73,7 +73,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ financials, system, isPdfMode
                 <Activity className="text-emerald-500" size={16} />
                 <div>
                    <div className="text-[8px] md:text-[10px] text-slate-500 uppercase font-bold tracking-wider">Cobertura Solar</div>
-                   <div className="text-xs md:text-sm font-semibold text-white">{system ? `${system.coverage}%` : '95%'}</div>
+                   <div className="text-xs md:text-sm font-semibold text-white">{system?.coverage ? `${system.coverage}%` : '95%'}</div>
                 </div>
              </div>
           </div>
