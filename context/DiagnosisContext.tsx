@@ -144,13 +144,19 @@ export const DiagnosisProvider: React.FC<Props> = ({ children }) => {
       const params = new URLSearchParams(window.location.search);
       let id = params.get('id');
 
+      console.log('[DiagnosisContext] pathname:', window.location.pathname);
+      console.log('[DiagnosisContext] query id:', id);
+
       // If no query param, try to get from path
       if (!id) {
         const pathParts = window.location.pathname.split('/').filter(Boolean);
+        console.log('[DiagnosisContext] pathParts:', pathParts);
         if (pathParts.length > 0 && pathParts[0] !== '') {
           id = pathParts[0];
         }
       }
+
+      console.log('[DiagnosisContext] final id:', id);
 
       if (!id) {
         // No ID provided, use defaults
@@ -191,9 +197,10 @@ export const DiagnosisProvider: React.FC<Props> = ({ children }) => {
           }
         };
 
+        console.log('[DiagnosisContext] Loaded data for:', fullData.client.shortName);
         setData(fullData);
       } catch (err) {
-        console.error('Error loading diagnosis:', err);
+        console.error('[DiagnosisContext] Error loading diagnosis:', err);
         setError(err instanceof Error ? err.message : 'Error desconocido');
       } finally {
         setIsLoading(false);
