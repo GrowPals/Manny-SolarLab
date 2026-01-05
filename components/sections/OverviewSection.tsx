@@ -77,7 +77,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ financials, system, a
         <StatCard
           icon={Zap}
           label="Cobertura"
-          value={`${animatedValues.coverage ?? system.coverage ?? 0}%`}
+          value={`${animatedValues.coverage || Math.round(Number(system.coverage)) || 0}%`}
           color="orange"
         />
       </div>

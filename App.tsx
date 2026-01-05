@@ -39,7 +39,7 @@ const App: React.FC = () => {
     savings: 0,
     payback: '0.0',
     roi: 0,
-    coverage: '0'
+    coverage: 0
   });
 
   // Derived Data - usando análisis de consumo real del cliente
@@ -59,33 +59,38 @@ const App: React.FC = () => {
 
   // Number Animation Effect
   useEffect(() => {
+    // Parse values safely with fallbacks
+    const coverageNum = Number(solarSystem.coverage) || 0;
+    const paybackNum = Number(financialAnalysis.paybackYears) || 0;
+    const irrNum = Number(financialAnalysis.irr) || 0;
+
     const targets = {
       savings: financialAnalysis.annualSavings || 0,
-      payback: parseFloat(financialAnalysis.paybackYears) || 0,
-      roi: parseFloat(financialAnalysis.irr) || 0,
-      coverage: parseFloat(solarSystem.coverage) || 0
+      payback: paybackNum,
+      roi: irrNum,
+      coverage: coverageNum
     };
-    
+
     const duration = 1000;
     const steps = 30;
     const interval = duration / steps;
     let step = 0;
-    
+
     const timer = setInterval(() => {
       step++;
       const progress = step / steps;
       const eased = 1 - Math.pow(1 - progress, 3); // Cubic ease out
-      
+
       setAnimatedValues({
         savings: Math.round(targets.savings * eased),
         payback: (targets.payback * eased).toFixed(1),
         roi: Math.round(targets.roi * eased),
-        coverage: (targets.coverage * eased).toFixed(0)
+        coverage: Math.round(targets.coverage * eased)
       });
-      
+
       if (step >= steps) clearInterval(timer);
     }, interval);
-    
+
     return () => clearInterval(timer);
   }, [financialAnalysis, solarSystem]);
 
@@ -343,14 +348,14 @@ const App: React.FC = () => {
                <h2 className="text-3xl font-black text-slate-900">Resumen Ejecutivo</h2>
              </div>
              {/* Pass static values for PDF to avoid animation delay */}
-             <OverviewSection 
-               financials={financialAnalysis} 
-               system={solarSystem} 
+             <OverviewSection
+               financials={financialAnalysis}
+               system={solarSystem}
                animatedValues={{
                  savings: financialAnalysis.annualSavings,
                  payback: financialAnalysis.paybackYears,
                  roi: financialAnalysis.irr,
-                 coverage: solarSystem.coverage
+                 coverage: Math.round(Number(solarSystem.coverage))
                }}
                isPdfMode={true}
              />
