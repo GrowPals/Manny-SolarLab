@@ -140,8 +140,17 @@ export const DiagnosisProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const loadData = async () => {
+      // Support both query param (?id=xxx) and path format (/xxx)
       const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+      let id = params.get('id');
+
+      // If no query param, try to get from path
+      if (!id) {
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        if (pathParts.length > 0 && pathParts[0] !== '') {
+          id = pathParts[0];
+        }
+      }
 
       if (!id) {
         // No ID provided, use defaults
