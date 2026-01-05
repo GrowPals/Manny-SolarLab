@@ -1,0 +1,34 @@
+{
+  "client": {
+    "name": "LOZA DE VILLAREAL OLGA",
+    "shortName": "Olga Loza",
+    "address": "HDA COYOTILLOS 135, VILLAS DEL MESON FRACC",
+    "city": "Juriquilla, QRO",
+    "postalCode": "76226",
+    "serviceNumber": "081990100586",
+    "accountNumber": "08DP09M040801740",
+    "meterNumber": "RHD630",
+    "rmu": "76226 99-01-05 XAXX-010101 001 CFE",
+    "tariff": "01",
+    "tariffName": "Doméstica de Alto Consumo",
+    "currentPeriod": "06 Oct 2025 - 03 Dic 2025"
+  },
+  "consumption": [
+    { "period": "Oct-Dic 25", "month": "Dic", "year": 2025, "kwh": 1092, "amount": 4365, "days": 58, "season": "mild", "current": true },
+    { "period": "Ago-Oct 25", "month": "Oct", "year": 2025, "kwh": 987, "amount": 3827, "days": 61, "season": "hot" },
+    { "period": "Jun-Ago 25", "month": "Ago", "year": 2025, "kwh": 1004, "amount": 3881, "days": 62, "season": "hot" },
+    { "period": "Abr-Jun 25", "month": "Jun", "year": 2025, "kwh": 1066, "amount": 4148, "days": 63, "season": "hot" },
+    { "period": "Ene-Abr 25", "month": "Abr", "year": 2025, "kwh": 1033, "amount": 3924, "days": 61, "season": "mild" },
+    { "period": "Dic-Ene 25", "month": "Ene", "year": 2025, "kwh": 550, "amount": 1712, "days": 59, "season": "cold" },
+    { "period": "Oct-Dic 24", "month": "Dic", "year": 2024, "kwh": 466, "amount": 1260, "days": 57, "season": "cold" },
+    { "period": "Ago-Oct 24", "month": "Oct", "year": 2024, "kwh": 573, "amount": 1753, "days": 62, "season": "hot" },
+    { "period": "Jun-Ago 24", "month": "Ago", "year": 2024, "kwh": 697, "amount": 2309, "days": 63, "season": "hot" },
+    { "period": "Abr-Jun 24", "month": "Jun", "year": 2024, "kwh": 879, "amount": 3122, "days": 62, "season": "hot" },
+    { "period": "Ene-Abr 24", "month": "Abr", "year": 2024, "kwh": 226, "amount": 307, "days": 62, "season": "mild" },
+    { "period": "Dic-Ene 24", "month": "Ene", "year": 2024, "kwh": 367, "amount": 779, "days": 58, "season": "cold" }
+  ],
+  "systemDefaults": {
+    "systemSize": 5.5,
+    "inflationRate": 5
+  }
+}
