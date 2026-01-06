@@ -28,7 +28,7 @@
     { "period": "Dic-Ene 24", "month": "Ene", "year": 2024, "kwh": 367, "amount": 779, "days": 58, "season": "cold" }
   ],
   "systemDefaults": {
-    "systemSize": 5.5,
+    "systemSize": 2.5,
     "inflationRate": 5
   }
 }

@@ -133,7 +133,7 @@ const FinancialSection: React.FC<FinancialSectionProps> = ({
               </div>
               <div className="text-center">
                 <p className="text-slate-400 text-[9px] md:text-[10px] uppercase tracking-wider font-bold mb-0.5">Cobertura</p>
-                <p className="text-xl md:text-3xl font-black text-emerald-400">{currentSystem.coveragePercentage}%</p>
+                <p className="text-xl md:text-3xl font-black text-emerald-400">{Math.round(Number(currentSystem.coverage))}%</p>
               </div>
             </div>
           </div>
